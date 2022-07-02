@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Shop Item - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <!-- <link href="static/css/item_styles.css" rel="stylesheet" /> -->
+        <link href="{{ url_for('static', path='/css/item_styles.css') }}" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Product section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><a href="{{productUrl}}"><img class="card-img-top mb-5 mb-md-0" src="{{productImage}}" alt="{{productName}}"  /></a></div>
+                    <div class="col-md-6">
+                        
+                        <h4 class="display-6 fw-bolder">{{productName}}</h4>
+                        <br>
+                        <div class="fs-4 mb-4">
+                            <span>🏆 {{keyword}} 랭킹 : {{rank}}</span>
+                        </div>
+                        <div class="fs-4 mb-4">
+                            <span>🚀로켓배송 : {{isRocket}}  |  🚚무료배송 : {{isFreeShipping}}</span>
+                        </div>
+                        
+                        <div class="fs-4 mb-4">
+                            <span>💰가격 : {{productPrice}} 원</span>
+                        </div>
+                        <h4>👨‍👩‍👧‍👧 review 요약</h4>
+
+                        <p class="lead">{{review}}</p>
+                        <div class="d-flex">
+                            
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="window.open('{{productUrl}}')">
+                                <i class="bi-cart-fill me-1"></i>
+                                구매하기
+                            </button>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Related items section-->
+        <section class="py-5 bg-light">
+            <div class="container px-4 px-lg-5 mt-5">
+                <h2 class="fw-bolder mb-4">상품 추천!</h2>
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="{{Related_item1_productUrl}}"><img class="card-img-top" src="{{Related_item1_productImage}}" alt="{{Related_item1_productName}}" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{Related_item1_productName}}</h5>
+                                    <!-- Product price-->
+                                    {{Related_item1_productPrice}} 원
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{Related_item1_productUrl}}">구매하기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="{{Related_item2_productUrl}}"><img class="card-img-top" src="{{Related_item2_productImage}}" alt="{{Related_item2_productName}}" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{Related_item2_productName}}</h5>
+                                    <!-- Product price-->
+                                    {{Related_item2_productPrice}} 원
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{Related_item2_productUrl}}">구매하기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="{{Related_item3_productUrl}}"><img class="card-img-top" src="{{Related_item3_productImage}}" alt="{{Related_item3_productName}}" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{Related_item3_productName}}</h5>
+                                    <!-- Product price-->
+                                    {{Related_item3_productPrice}} 원
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{Related_item3_productUrl}}">구매하기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <a href="{{Related_item4_productUrl}}"><img class="card-img-top" src="{{Related_item4_productImage}}" alt="{{Related_item4_productName}}" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{Related_item4_productName}}</h5>
+                                    <!-- Product price-->
+                                    {{Related_item4_productPrice}} 원
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{Related_item4_productUrl}}">구매하기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">이 사이트는 쿠팡 파트너스 활동의 일환으로
+                일정액의 수수료를 제공받을 수 있습니다.</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="static/js/item_scripts.js"></script>
+    </body>
+</html>
