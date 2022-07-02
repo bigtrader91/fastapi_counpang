@@ -42,6 +42,7 @@
 
 
 
+
                         </li>
                     </ul>
                     <form class="d-flex">
@@ -66,53 +67,48 @@
         </header>
         <!-- Section-->
         <section class="py-5">
+            
             <div class="container px-4 px-lg-5 mt-5">
-                {% for cat in best %}
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
+                <div class="text-center text-black">
+                    <h2 class="display-4 fw-bolder">{{ temp_cat[0]['카테고리'] }}</h2>
+                    <br><br><br>
+                </div>
                 
-                    {% for rank in cat %}
-                    
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for cat in temp_cat %}
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ rank['이미지'] }}" alt="{{ rank['상품명'] }}" />
+                            <img class="card-img-top" src="{{ cat['이미지'] }}" alt="{{ cat['상품명'] }}" />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ rank['상품명'] }}</h5>
+                                    <h5 class="fw-bolder">{{ cat['상품명'] }}</h5>
                                     <!-- Product price-->
-                                    {{ rank['가격']}}원
+                                    {{ cat['가격']}}원
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ rank['주소'] }}">구매하기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ cat['주소'] }}">구매하기</a></div>
                             </div>
                         </div>
                     </div>
-         
                     {% endfor %}
-                    <div  class="center">
-                        <a href="/{{cat[0]['카테고리']|replace('/','_')}}" class="btn btn-lg btn-light btn-block m-1" data-v-0b78704d="">
-                            {{cat[0]['카테고리']}} 더보기
-                          </a>
-                        
-                    </div>
-                    
-                    
+                </div> 
+                
             </div>
             <br>
             <br>
             <br>
             <hr style="border: solid 1.5px black;">
 
-            {% endfor %}
+            
 
 
 
-           
+            
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">

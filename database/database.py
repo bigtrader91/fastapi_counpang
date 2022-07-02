@@ -6,26 +6,13 @@ import psycopg2
 from psycopg2 import connect, extensions
 
 engine = create_engine(
-    f"postgresql://postgres:1234@localhost/coupang",
+    f"postgresql://postgres:postgres@localhost/coupang",
     echo=True,
 )
 
-conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password=1234,port=5432)
-
-# SessionLocal = sessionmaker(bind=engine)
-
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
-
-
+conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
 
 def create_db(DB_NAME):
-
-    cursor = conn.cursor()
 
     autocommit = extensions.ISOLATION_LEVEL_AUTOCOMMIT
     print("ISOLATION_LEVEL_AUTOCOMMIT:", extensions.ISOLATION_LEVEL_AUTOCOMMIT)
@@ -38,9 +25,26 @@ def create_db(DB_NAME):
     conn.close()
 
 
-def insert_data(df):
-    df.to_sql(
-        name='test',
-        con=engine,
-        if_exists="replace")
+def insert_data(name,df,if_exists='append'):
+    try:
+        df.to_sql(
+            name=name,
+            con=engine,
+            if_exists=if_exists)
+    except Exception as ex:
+        print("insert_data error :", ex)
+
+
+
+# SessionLocal = sessionmaker(bind=engine)
+
+# def get_db():
+#     db = SessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         db.close()
+
+
+
 
