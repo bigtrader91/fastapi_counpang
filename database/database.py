@@ -1,9 +1,9 @@
-import sqlalchemy
-from sqlalchemy.orm import declarative_base, sessionmaker
+
+
 from sqlalchemy import create_engine
-import pandas as pd
+
 import psycopg2
-from psycopg2 import connect, extensions
+from psycopg2 import extensions
 
 engine = create_engine(
     f"postgresql://postgres:postgres@localhost/coupang",

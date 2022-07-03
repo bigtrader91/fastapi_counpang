@@ -7,7 +7,7 @@
         <meta name="author" content="" />
         <title>GumeGume</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/구메구메.ico" />
+        <link rel="icon" type="image/x-icon" href="static/assets/구메구메.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -61,7 +61,7 @@
                 <div class="text-center text-white">
 
                     <h1 class="display-4 fw-bolder">GumeGume</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">secretly from time to time</p>
+                    <p class="lead fw-normal text-white-50 mb-0">Secretly from time to time</p>
                 </div>
             </div>
         </header>
@@ -79,7 +79,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ cat['이미지'] }}" alt="{{ cat['상품명'] }}" />
+                            <a href="{{cat['주소']}}" target="_blank" ><img class="card-img-top" src="{{ cat['이미지'] }}" alt="{{ cat['상품명'] }}" /></a>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
