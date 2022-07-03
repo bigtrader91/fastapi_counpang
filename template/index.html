@@ -7,7 +7,7 @@
         <meta name="author" content="" />
         <title>GumeGume</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/구메구메.ico" />
+        <link rel="icon" type="image/x-icon" href="static/assets/구메구메.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -60,7 +60,7 @@
                 <div class="text-center text-white">
 
                     <h1 class="display-4 fw-bolder">GumeGume</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">secretly from time to time</p>
+                    <p class="lead fw-normal text-white-50 mb-0">Secretly from time to time</p>
                 </div>
             </div>
         </header>
@@ -76,7 +76,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ rank['이미지'] }}" alt="{{ rank['상품명'] }}" />
+                            <a href="{{rank['주소']}}"  target="_blank" ><img class="card-img-top" src="{{ rank['이미지'] }}" alt="{{ rank['상품명'] }}" /></a>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -87,24 +87,24 @@
                                 </div>
                             </div>
                             <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent" >
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ rank['주소'] }}">구매하기</a></div>
                             </div>
                         </div>
                     </div>
          
                     {% endfor %}
-                    <div  class="center">
-                        <a href="/{{cat[0]['카테고리']|replace('/','_')}}" class="btn btn-lg btn-light btn-block m-1" data-v-0b78704d="">
-                            {{cat[0]['카테고리']}} 더보기
-                          </a>
-                        
-                    </div>
-                    
+                
+
+                <a href="/{{cat[0]['카테고리']|replace('/','_')}}" class="btn btn-lg btn-light btn-block m-1" data-v-0b78704d="">
+                <h3>{{cat[0]['카테고리']}} 더보기</h3>
+                </a>  
+        
                     
             </div>
             <br>
             <br>
+  
             <br>
             <hr style="border: solid 1.5px black;">
 
