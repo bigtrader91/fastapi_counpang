@@ -1,0 +1,776 @@
+/home/gumeisbuy/web/service/search.py
+
+2022-07-04 12:32:08,568 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 12:32:08,569 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:32:08,570 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 12:32:08,571 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:32:08,572 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 12:32:08,572 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:32:08,574 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 12:32:08,574 INFO sqlalchemy.engine.Engine [generated in 0.00021s] {'name': 'search'}
+2022-07-04 12:32:08,576 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 12:32:08,576 INFO sqlalchemy.engine.Engine [cached since 0.002236s ago] {'name': 'search'}
+2022-07-04 12:32:08,578 INFO sqlalchemy.engine.Engine SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = %(schema)s AND c.relkind in ('r', 'p')
+2022-07-04 12:32:08,578 INFO sqlalchemy.engine.Engine [generated in 0.00020s] {'schema': 'public'}
+2022-07-04 12:32:08,580 INFO sqlalchemy.engine.Engine 
+            SELECT c.oid
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE (pg_catalog.pg_table_is_visible(c.oid))
+            AND c.relname = %(table_name)s AND c.relkind in
+            ('r', 'v', 'm', 'f', 'p')
+        
+2022-07-04 12:32:08,580 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table_name': 'search'}
+2022-07-04 12:32:08,581 INFO sqlalchemy.engine.Engine 
+            SELECT a.attname,
+              pg_catalog.format_type(a.atttypid, a.atttypmod),
+              (
+                SELECT pg_catalog.pg_get_expr(d.adbin, d.adrelid)
+                FROM pg_catalog.pg_attrdef d
+                WHERE d.adrelid = a.attrelid AND d.adnum = a.attnum
+                AND a.atthasdef
+              ) AS DEFAULT,
+              a.attnotnull,
+              a.attrelid as table_oid,
+              pgd.description as comment,
+              a.attgenerated as generated,
+                              (SELECT json_build_object(
+                    'always', a.attidentity = 'a',
+                    'start', s.seqstart,
+                    'increment', s.seqincrement,
+                    'minvalue', s.seqmin,
+                    'maxvalue', s.seqmax,
+                    'cache', s.seqcache,
+                    'cycle', s.seqcycle)
+                FROM pg_catalog.pg_sequence s
+                JOIN pg_catalog.pg_class c on s.seqrelid = c."oid"
+                WHERE c.relkind = 'S'
+                AND a.attidentity != ''
+                AND s.seqrelid = pg_catalog.pg_get_serial_sequence(
+                    a.attrelid::regclass::text, a.attname
+                )::regclass::oid
+                ) as identity_options                
+            FROM pg_catalog.pg_attribute a
+            LEFT JOIN pg_catalog.pg_description pgd ON (
+                pgd.objoid = a.attrelid AND pgd.objsubid = a.attnum)
+            WHERE a.attrelid = %(table_oid)s
+            AND a.attnum > 0 AND NOT a.attisdropped
+            ORDER BY a.attnum
+        
+2022-07-04 12:32:08,582 INFO sqlalchemy.engine.Engine [generated in 0.00019s] {'table_oid': 32768}
+2022-07-04 12:32:08,584 INFO sqlalchemy.engine.Engine 
+            SELECT t.typname as "name",
+               pg_catalog.format_type(t.typbasetype, t.typtypmod) as "attype",
+               not t.typnotnull as "nullable",
+               t.typdefault as "default",
+               pg_catalog.pg_type_is_visible(t.oid) as "visible",
+               n.nspname as "schema"
+            FROM pg_catalog.pg_type t
+               LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+            WHERE t.typtype = 'd'
+        
+2022-07-04 12:32:08,585 INFO sqlalchemy.engine.Engine [generated in 0.00017s] {}
+2022-07-04 12:32:08,586 INFO sqlalchemy.engine.Engine 
+            SELECT t.typname as "name",
+               -- no enum defaults in 8.4 at least
+               -- t.typdefault as "default",
+               pg_catalog.pg_type_is_visible(t.oid) as "visible",
+               n.nspname as "schema",
+               e.enumlabel as "label"
+            FROM pg_catalog.pg_type t
+                 LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+                 LEFT JOIN pg_catalog.pg_enum e ON t.oid = e.enumtypid
+            WHERE t.typtype = 'e'
+        ORDER BY "schema", "name", e.oid
+2022-07-04 12:32:08,586 INFO sqlalchemy.engine.Engine [generated in 0.00017s] {}
+2022-07-04 12:32:08,589 INFO sqlalchemy.engine.Engine 
+                SELECT a.attname
+                FROM pg_attribute a JOIN (
+                    SELECT unnest(ix.indkey) attnum,
+                           generate_subscripts(ix.indkey, 1) ord
+                    FROM pg_index ix
+                    WHERE ix.indrelid = %(table_oid)s AND ix.indisprimary
+                    ) k ON a.attnum=k.attnum
+                WHERE a.attrelid = %(table_oid)s
+                ORDER BY k.ord
+            
+2022-07-04 12:32:08,589 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table_oid': 32768}
+2022-07-04 12:32:08,591 INFO sqlalchemy.engine.Engine 
+        SELECT conname
+           FROM  pg_catalog.pg_constraint r
+           WHERE r.conrelid = %(table_oid)s AND r.contype = 'p'
+           ORDER BY 1
+        
+2022-07-04 12:32:08,591 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table_oid': 32768}
+2022-07-04 12:32:08,594 INFO sqlalchemy.engine.Engine 
+          SELECT r.conname,
+                pg_catalog.pg_get_constraintdef(r.oid, true) as condef,
+                n.nspname as conschema
+          FROM  pg_catalog.pg_constraint r,
+                pg_namespace n,
+                pg_class c
+
+          WHERE r.conrelid = %(table)s AND
+                r.contype = 'f' AND
+                c.oid = confrelid AND
+                n.oid = c.relnamespace
+          ORDER BY 1
+        
+2022-07-04 12:32:08,594 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table': 32768}
+2022-07-04 12:32:08,595 INFO sqlalchemy.engine.Engine 
+              SELECT
+                  i.relname as relname,
+                  ix.indisunique, ix.indexprs,
+                  a.attname, a.attnum, c.conrelid, ix.indkey::varchar,
+                  ix.indoption::varchar, i.reloptions, am.amname,
+                  pg_get_expr(ix.indpred, ix.indrelid),
+                  ix.indnkeyatts as indnkeyatts
+              FROM
+                  pg_class t
+                        join pg_index ix on t.oid = ix.indrelid
+                        join pg_class i on i.oid = ix.indexrelid
+                        left outer join
+                            pg_attribute a
+                            on t.oid = a.attrelid and a.attnum = ANY(ix.indkey)
+                        left outer join
+                            pg_constraint c
+                            on (ix.indrelid = c.conrelid and
+                                ix.indexrelid = c.conindid and
+                                c.contype in ('p', 'u', 'x'))
+                        left outer join
+                            pg_am am
+                            on i.relam = am.oid
+              WHERE
+                  t.relkind IN ('r', 'v', 'f', 'm', 'p')
+                  and t.oid = %(table_oid)s
+                  and ix.indisprimary = 'f'
+              ORDER BY
+                  t.relname,
+                  i.relname
+            
+2022-07-04 12:32:08,595 INFO sqlalchemy.engine.Engine [generated in 0.00016s] {'table_oid': 32768}
+2022-07-04 12:32:08,598 INFO sqlalchemy.engine.Engine 
+            SELECT
+                cons.conname as name,
+                cons.conkey as key,
+                a.attnum as col_num,
+                a.attname as col_name
+            FROM
+                pg_catalog.pg_constraint cons
+                join pg_attribute a
+                  on cons.conrelid = a.attrelid AND
+                    a.attnum = ANY(cons.conkey)
+            WHERE
+                cons.conrelid = %(table_oid)s AND
+                cons.contype = 'u'
+        
+2022-07-04 12:32:08,598 INFO sqlalchemy.engine.Engine [generated in 0.00019s] {'table_oid': 32768}
+2022-07-04 12:32:08,600 INFO sqlalchemy.engine.Engine 
+            SELECT
+                cons.conname as name,
+                pg_get_constraintdef(cons.oid) as src
+            FROM
+                pg_catalog.pg_constraint cons
+            WHERE
+                cons.conrelid = %(table_oid)s AND
+                cons.contype = 'c'
+        
+2022-07-04 12:32:08,600 INFO sqlalchemy.engine.Engine [generated in 0.00019s] {'table_oid': 32768}
+2022-07-04 12:32:08,601 INFO sqlalchemy.engine.Engine 
+            SELECT
+                pgd.description as table_comment
+            FROM
+                pg_catalog.pg_description pgd
+            WHERE
+                pgd.objsubid = 0 AND
+                pgd.objoid = %(table_oid)s
+        
+2022-07-04 12:32:08,601 INFO sqlalchemy.engine.Engine [generated in 0.00034s] {'table_oid': 32768}
+2022-07-04 12:32:08,603 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:32:08,603 INFO sqlalchemy.engine.Engine 
+DROP TABLE search
+2022-07-04 12:32:08,603 INFO sqlalchemy.engine.Engine [no key 0.00014s] {}
+2022-07-04 12:32:08,605 INFO sqlalchemy.engine.Engine COMMIT
+2022-07-04 12:32:08,608 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:32:08,609 INFO sqlalchemy.engine.Engine 
+CREATE TABLE search (
+	index BIGINT, 
+	"productId" BIGINT, 
+	"productName" TEXT, 
+	"productPrice" TEXT, 
+	"productImage" TEXT, 
+	"productUrl" TEXT, 
+	keyword TEXT, 
+	rank BIGINT, 
+	"isRocket" BOOLEAN, 
+	"isFreeShipping" BOOLEAN, 
+	tag TEXT
+)
+
+
+2022-07-04 12:32:08,609 INFO sqlalchemy.engine.Engine [no key 0.00025s] {}
+2022-07-04 12:32:08,614 INFO sqlalchemy.engine.Engine CREATE INDEX ix_search_index ON search (index)
+2022-07-04 12:32:08,615 INFO sqlalchemy.engine.Engine [no key 0.00034s] {}
+2022-07-04 12:32:08,618 INFO sqlalchemy.engine.Engine COMMIT
+2022-07-04 12:32:08,621 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:32:08,623 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 12:32:08,623 INFO sqlalchemy.engine.Engine [generated in 0.00046s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704213203790164214', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 12:32:08,626 INFO sqlalchemy.engine.Engine COMMIT
+시간 : 2022-07-04 12:32:03.054022  |  키워드 : 우드슬랩다리
+/home/gumeisbuy/web/service/search.py
+2022-07-04 12:40:08,452 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 12:40:08,452 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:40:08,454 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 12:40:08,454 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:40:08,455 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 12:40:08,455 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:40:08,457 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 12:40:08,457 INFO sqlalchemy.engine.Engine [generated in 0.00022s] {'name': 'search'}
+2022-07-04 12:40:08,459 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 12:40:08,459 INFO sqlalchemy.engine.Engine [cached since 0.002451s ago] {'name': 'search'}
+2022-07-04 12:40:08,462 INFO sqlalchemy.engine.Engine SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = %(schema)s AND c.relkind in ('r', 'p')
+2022-07-04 12:40:08,462 INFO sqlalchemy.engine.Engine [generated in 0.00019s] {'schema': 'public'}
+2022-07-04 12:40:08,464 INFO sqlalchemy.engine.Engine 
+            SELECT c.oid
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE (pg_catalog.pg_table_is_visible(c.oid))
+            AND c.relname = %(table_name)s AND c.relkind in
+            ('r', 'v', 'm', 'f', 'p')
+        
+2022-07-04 12:40:08,464 INFO sqlalchemy.engine.Engine [generated in 0.00017s] {'table_name': 'search'}
+2022-07-04 12:40:08,465 INFO sqlalchemy.engine.Engine 
+            SELECT a.attname,
+              pg_catalog.format_type(a.atttypid, a.atttypmod),
+              (
+                SELECT pg_catalog.pg_get_expr(d.adbin, d.adrelid)
+                FROM pg_catalog.pg_attrdef d
+                WHERE d.adrelid = a.attrelid AND d.adnum = a.attnum
+                AND a.atthasdef
+              ) AS DEFAULT,
+              a.attnotnull,
+              a.attrelid as table_oid,
+              pgd.description as comment,
+              a.attgenerated as generated,
+                              (SELECT json_build_object(
+                    'always', a.attidentity = 'a',
+                    'start', s.seqstart,
+                    'increment', s.seqincrement,
+                    'minvalue', s.seqmin,
+                    'maxvalue', s.seqmax,
+                    'cache', s.seqcache,
+                    'cycle', s.seqcycle)
+                FROM pg_catalog.pg_sequence s
+                JOIN pg_catalog.pg_class c on s.seqrelid = c."oid"
+                WHERE c.relkind = 'S'
+                AND a.attidentity != ''
+                AND s.seqrelid = pg_catalog.pg_get_serial_sequence(
+                    a.attrelid::regclass::text, a.attname
+                )::regclass::oid
+                ) as identity_options                
+            FROM pg_catalog.pg_attribute a
+            LEFT JOIN pg_catalog.pg_description pgd ON (
+                pgd.objoid = a.attrelid AND pgd.objsubid = a.attnum)
+            WHERE a.attrelid = %(table_oid)s
+            AND a.attnum > 0 AND NOT a.attisdropped
+            ORDER BY a.attnum
+        
+2022-07-04 12:40:08,465 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table_oid': 32774}
+2022-07-04 12:40:08,468 INFO sqlalchemy.engine.Engine 
+            SELECT t.typname as "name",
+               pg_catalog.format_type(t.typbasetype, t.typtypmod) as "attype",
+               not t.typnotnull as "nullable",
+               t.typdefault as "default",
+               pg_catalog.pg_type_is_visible(t.oid) as "visible",
+               n.nspname as "schema"
+            FROM pg_catalog.pg_type t
+               LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+            WHERE t.typtype = 'd'
+        
+2022-07-04 12:40:08,468 INFO sqlalchemy.engine.Engine [generated in 0.00016s] {}
+2022-07-04 12:40:08,470 INFO sqlalchemy.engine.Engine 
+            SELECT t.typname as "name",
+               -- no enum defaults in 8.4 at least
+               -- t.typdefault as "default",
+               pg_catalog.pg_type_is_visible(t.oid) as "visible",
+               n.nspname as "schema",
+               e.enumlabel as "label"
+            FROM pg_catalog.pg_type t
+                 LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+                 LEFT JOIN pg_catalog.pg_enum e ON t.oid = e.enumtypid
+            WHERE t.typtype = 'e'
+        ORDER BY "schema", "name", e.oid
+2022-07-04 12:40:08,470 INFO sqlalchemy.engine.Engine [generated in 0.00016s] {}
+2022-07-04 12:40:08,473 INFO sqlalchemy.engine.Engine 
+                SELECT a.attname
+                FROM pg_attribute a JOIN (
+                    SELECT unnest(ix.indkey) attnum,
+                           generate_subscripts(ix.indkey, 1) ord
+                    FROM pg_index ix
+                    WHERE ix.indrelid = %(table_oid)s AND ix.indisprimary
+                    ) k ON a.attnum=k.attnum
+                WHERE a.attrelid = %(table_oid)s
+                ORDER BY k.ord
+            
+2022-07-04 12:40:08,473 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table_oid': 32774}
+2022-07-04 12:40:08,474 INFO sqlalchemy.engine.Engine 
+        SELECT conname
+           FROM  pg_catalog.pg_constraint r
+           WHERE r.conrelid = %(table_oid)s AND r.contype = 'p'
+           ORDER BY 1
+        
+2022-07-04 12:40:08,474 INFO sqlalchemy.engine.Engine [generated in 0.00016s] {'table_oid': 32774}
+2022-07-04 12:40:08,477 INFO sqlalchemy.engine.Engine 
+          SELECT r.conname,
+                pg_catalog.pg_get_constraintdef(r.oid, true) as condef,
+                n.nspname as conschema
+          FROM  pg_catalog.pg_constraint r,
+                pg_namespace n,
+                pg_class c
+
+          WHERE r.conrelid = %(table)s AND
+                r.contype = 'f' AND
+                c.oid = confrelid AND
+                n.oid = c.relnamespace
+          ORDER BY 1
+        
+2022-07-04 12:40:08,477 INFO sqlalchemy.engine.Engine [generated in 0.00020s] {'table': 32774}
+2022-07-04 12:40:08,478 INFO sqlalchemy.engine.Engine 
+              SELECT
+                  i.relname as relname,
+                  ix.indisunique, ix.indexprs,
+                  a.attname, a.attnum, c.conrelid, ix.indkey::varchar,
+                  ix.indoption::varchar, i.reloptions, am.amname,
+                  pg_get_expr(ix.indpred, ix.indrelid),
+                  ix.indnkeyatts as indnkeyatts
+              FROM
+                  pg_class t
+                        join pg_index ix on t.oid = ix.indrelid
+                        join pg_class i on i.oid = ix.indexrelid
+                        left outer join
+                            pg_attribute a
+                            on t.oid = a.attrelid and a.attnum = ANY(ix.indkey)
+                        left outer join
+                            pg_constraint c
+                            on (ix.indrelid = c.conrelid and
+                                ix.indexrelid = c.conindid and
+                                c.contype in ('p', 'u', 'x'))
+                        left outer join
+                            pg_am am
+                            on i.relam = am.oid
+              WHERE
+                  t.relkind IN ('r', 'v', 'f', 'm', 'p')
+                  and t.oid = %(table_oid)s
+                  and ix.indisprimary = 'f'
+              ORDER BY
+                  t.relname,
+                  i.relname
+            
+2022-07-04 12:40:08,478 INFO sqlalchemy.engine.Engine [generated in 0.00018s] {'table_oid': 32774}
+2022-07-04 12:40:08,481 INFO sqlalchemy.engine.Engine 
+            SELECT
+                cons.conname as name,
+                cons.conkey as key,
+                a.attnum as col_num,
+                a.attname as col_name
+            FROM
+                pg_catalog.pg_constraint cons
+                join pg_attribute a
+                  on cons.conrelid = a.attrelid AND
+                    a.attnum = ANY(cons.conkey)
+            WHERE
+                cons.conrelid = %(table_oid)s AND
+                cons.contype = 'u'
+        
+2022-07-04 12:40:08,481 INFO sqlalchemy.engine.Engine [generated in 0.00017s] {'table_oid': 32774}
+2022-07-04 12:40:08,482 INFO sqlalchemy.engine.Engine 
+            SELECT
+                cons.conname as name,
+                pg_get_constraintdef(cons.oid) as src
+            FROM
+                pg_catalog.pg_constraint cons
+            WHERE
+                cons.conrelid = %(table_oid)s AND
+                cons.contype = 'c'
+        
+2022-07-04 12:40:08,483 INFO sqlalchemy.engine.Engine [generated in 0.00015s] {'table_oid': 32774}
+2022-07-04 12:40:08,484 INFO sqlalchemy.engine.Engine 
+            SELECT
+                pgd.description as table_comment
+            FROM
+                pg_catalog.pg_description pgd
+            WHERE
+                pgd.objsubid = 0 AND
+                pgd.objoid = %(table_oid)s
+        
+2022-07-04 12:40:08,484 INFO sqlalchemy.engine.Engine [generated in 0.00017s] {'table_oid': 32774}
+2022-07-04 12:40:08,485 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:40:08,485 INFO sqlalchemy.engine.Engine 
+DROP TABLE search
+2022-07-04 12:40:08,485 INFO sqlalchemy.engine.Engine [no key 0.00014s] {}
+2022-07-04 12:40:08,487 INFO sqlalchemy.engine.Engine COMMIT
+2022-07-04 12:40:08,490 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:40:08,491 INFO sqlalchemy.engine.Engine 
+CREATE TABLE search (
+	index BIGINT, 
+	"productId" BIGINT, 
+	"productName" TEXT, 
+	"productPrice" TEXT, 
+	"productImage" TEXT, 
+	"productUrl" TEXT, 
+	keyword TEXT, 
+	rank BIGINT, 
+	"isRocket" BOOLEAN, 
+	"isFreeShipping" BOOLEAN, 
+	tag TEXT
+)
+
+
+2022-07-04 12:40:08,491 INFO sqlalchemy.engine.Engine [no key 0.00013s] {}
+2022-07-04 12:40:08,496 INFO sqlalchemy.engine.Engine CREATE INDEX ix_search_index ON search (index)
+2022-07-04 12:40:08,497 INFO sqlalchemy.engine.Engine [no key 0.00016s] {}
+2022-07-04 12:40:08,500 INFO sqlalchemy.engine.Engine COMMIT
+2022-07-04 12:40:08,505 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:40:08,507 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 12:40:08,507 INFO sqlalchemy.engine.Engine [generated in 0.00044s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704214003366155795', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 12:40:08,510 INFO sqlalchemy.engine.Engine COMMIT
+시간 : 2022-07-04 12:40:02.801442  |  키워드 : 우드슬랩다리
+/home/gumeisbuy/web/service/search.py
+2022-07-04 12:48:07,154 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 12:48:07,155 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:48:07,156 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 12:48:07,157 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:48:07,158 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 12:48:07,158 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:48:07,160 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 12:48:07,160 INFO sqlalchemy.engine.Engine [generated in 0.00034s] {'name': 'search'}
+2022-07-04 12:48:07,163 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:48:07,165 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 12:48:07,165 INFO sqlalchemy.engine.Engine [generated in 0.00037s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704214802715154192', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 12:48:07,168 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 12:56:08,346 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 12:56:08,346 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:56:08,350 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 12:56:08,350 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:56:08,352 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 12:56:08,352 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 12:56:08,354 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 12:56:08,354 INFO sqlalchemy.engine.Engine [generated in 0.00025s] {'name': 'search'}
+2022-07-04 12:56:08,357 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 12:56:08,358 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 12:56:08,359 INFO sqlalchemy.engine.Engine [generated in 0.00033s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704215603719132227', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 12:56:08,361 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 13:00:07,554 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 13:00:07,555 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:00:07,556 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 13:00:07,557 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:00:07,558 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 13:00:07,558 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:00:07,560 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 13:00:07,560 INFO sqlalchemy.engine.Engine [generated in 0.00032s] {'name': 'search'}
+2022-07-04 13:00:07,563 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 13:00:07,565 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 13:00:07,565 INFO sqlalchemy.engine.Engine [generated in 0.00031s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704220003008131533', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 13:00:07,568 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 13:08:07,788 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 13:08:07,788 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:08:07,790 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 13:08:07,790 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:08:07,791 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 13:08:07,792 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:08:07,794 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 13:08:07,794 INFO sqlalchemy.engine.Engine [generated in 0.00031s] {'name': 'search'}
+2022-07-04 13:08:07,797 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 13:08:07,799 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 13:08:07,799 INFO sqlalchemy.engine.Engine [generated in 0.00040s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704220802868169748', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 13:08:07,802 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 13:16:08,209 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 13:16:08,209 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:16:08,211 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 13:16:08,211 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:16:08,212 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 13:16:08,212 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:16:08,214 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 13:16:08,214 INFO sqlalchemy.engine.Engine [generated in 0.00029s] {'name': 'search'}
+2022-07-04 13:16:08,217 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 13:16:08,219 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 13:16:08,219 INFO sqlalchemy.engine.Engine [generated in 0.00037s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704221603198130485', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 13:16:08,222 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 13:24:08,378 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 13:24:08,378 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:24:08,380 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 13:24:08,380 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:24:08,381 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 13:24:08,381 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:24:08,383 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 13:24:08,383 INFO sqlalchemy.engine.Engine [generated in 0.00021s] {'name': 'search'}
+2022-07-04 13:24:08,386 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 13:24:08,387 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 13:24:08,388 INFO sqlalchemy.engine.Engine [generated in 0.00030s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704222403493139883', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 13:24:08,390 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 13:32:07,364 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 13:32:07,365 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:32:07,367 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 13:32:07,367 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:32:07,368 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 13:32:07,369 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:32:07,371 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 13:32:07,371 INFO sqlalchemy.engine.Engine [generated in 0.00031s] {'name': 'search'}
+2022-07-04 13:32:07,374 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 13:32:07,376 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 13:32:07,376 INFO sqlalchemy.engine.Engine [generated in 0.00039s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704223202860166848', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 13:32:07,379 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 13:40:08,105 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 13:40:08,107 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:40:08,110 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 13:40:08,111 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:40:08,112 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 13:40:08,112 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 13:40:08,114 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 13:40:08,114 INFO sqlalchemy.engine.Engine [generated in 0.00020s] {'name': 'search'}
+2022-07-04 13:40:08,118 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 13:40:08,120 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 13:40:08,120 INFO sqlalchemy.engine.Engine [generated in 0.00032s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704224003491162268', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 13:40:08,124 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+insert_data error : (psycopg2.OperationalError) connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+/home/gumeisbuy/web/service/search.py
+2022-07-04 14:00:07,633 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 14:00:07,633 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 14:00:07,638 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 14:00:07,638 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 14:00:07,640 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 14:00:07,641 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 14:00:07,642 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 14:00:07,643 INFO sqlalchemy.engine.Engine [generated in 0.00042s] {'name': 'search'}
+2022-07-04 14:00:07,649 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 14:00:07,650 INFO sqlalchemy.engine.Engine [cached since 0.007263s ago] {'name': 'search'}
+2022-07-04 14:00:07,653 INFO sqlalchemy.engine.Engine SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = %(schema)s AND c.relkind in ('r', 'p')
+2022-07-04 14:00:07,653 INFO sqlalchemy.engine.Engine [generated in 0.00063s] {'schema': 'public'}
+2022-07-04 14:00:07,658 INFO sqlalchemy.engine.Engine 
+            SELECT c.oid
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE (pg_catalog.pg_table_is_visible(c.oid))
+            AND c.relname = %(table_name)s AND c.relkind in
+            ('r', 'v', 'm', 'f', 'p')
+        
+2022-07-04 14:00:07,658 INFO sqlalchemy.engine.Engine [generated in 0.00058s] {'table_name': 'search'}
+2022-07-04 14:00:07,660 INFO sqlalchemy.engine.Engine 
+            SELECT a.attname,
+              pg_catalog.format_type(a.atttypid, a.atttypmod),
+              (
+                SELECT pg_catalog.pg_get_expr(d.adbin, d.adrelid)
+                FROM pg_catalog.pg_attrdef d
+                WHERE d.adrelid = a.attrelid AND d.adnum = a.attnum
+                AND a.atthasdef
+              ) AS DEFAULT,
+              a.attnotnull,
+              a.attrelid as table_oid,
+              pgd.description as comment,
+              a.attgenerated as generated,
+                              (SELECT json_build_object(
+                    'always', a.attidentity = 'a',
+                    'start', s.seqstart,
+                    'increment', s.seqincrement,
+                    'minvalue', s.seqmin,
+                    'maxvalue', s.seqmax,
+                    'cache', s.seqcache,
+                    'cycle', s.seqcycle)
+                FROM pg_catalog.pg_sequence s
+                JOIN pg_catalog.pg_class c on s.seqrelid = c."oid"
+                WHERE c.relkind = 'S'
+                AND a.attidentity != ''
+                AND s.seqrelid = pg_catalog.pg_get_serial_sequence(
+                    a.attrelid::regclass::text, a.attname
+                )::regclass::oid
+                ) as identity_options                
+            FROM pg_catalog.pg_attribute a
+            LEFT JOIN pg_catalog.pg_description pgd ON (
+                pgd.objoid = a.attrelid AND pgd.objsubid = a.attnum)
+            WHERE a.attrelid = %(table_oid)s
+            AND a.attnum > 0 AND NOT a.attisdropped
+            ORDER BY a.attnum
+        
+2022-07-04 14:00:07,660 INFO sqlalchemy.engine.Engine [generated in 0.00025s] {'table_oid': 32780}
+2022-07-04 14:00:07,680 INFO sqlalchemy.engine.Engine 
+            SELECT t.typname as "name",
+               pg_catalog.format_type(t.typbasetype, t.typtypmod) as "attype",
+               not t.typnotnull as "nullable",
+               t.typdefault as "default",
+               pg_catalog.pg_type_is_visible(t.oid) as "visible",
+               n.nspname as "schema"
+            FROM pg_catalog.pg_type t
+               LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+            WHERE t.typtype = 'd'
+        
+2022-07-04 14:00:07,680 INFO sqlalchemy.engine.Engine [generated in 0.00028s] {}
+2022-07-04 14:00:07,682 INFO sqlalchemy.engine.Engine 
+            SELECT t.typname as "name",
+               -- no enum defaults in 8.4 at least
+               -- t.typdefault as "default",
+               pg_catalog.pg_type_is_visible(t.oid) as "visible",
+               n.nspname as "schema",
+               e.enumlabel as "label"
+            FROM pg_catalog.pg_type t
+                 LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+                 LEFT JOIN pg_catalog.pg_enum e ON t.oid = e.enumtypid
+            WHERE t.typtype = 'e'
+        ORDER BY "schema", "name", e.oid
+2022-07-04 14:00:07,682 INFO sqlalchemy.engine.Engine [generated in 0.00024s] {}
+2022-07-04 14:00:07,688 INFO sqlalchemy.engine.Engine 
+                SELECT a.attname
+                FROM pg_attribute a JOIN (
+                    SELECT unnest(ix.indkey) attnum,
+                           generate_subscripts(ix.indkey, 1) ord
+                    FROM pg_index ix
+                    WHERE ix.indrelid = %(table_oid)s AND ix.indisprimary
+                    ) k ON a.attnum=k.attnum
+                WHERE a.attrelid = %(table_oid)s
+                ORDER BY k.ord
+            
+2022-07-04 14:00:07,688 INFO sqlalchemy.engine.Engine [generated in 0.00028s] {'table_oid': 32780}
+2022-07-04 14:00:07,694 INFO sqlalchemy.engine.Engine 
+        SELECT conname
+           FROM  pg_catalog.pg_constraint r
+           WHERE r.conrelid = %(table_oid)s AND r.contype = 'p'
+           ORDER BY 1
+        
+2022-07-04 14:00:07,694 INFO sqlalchemy.engine.Engine [generated in 0.00028s] {'table_oid': 32780}
+2022-07-04 14:00:07,704 INFO sqlalchemy.engine.Engine 
+          SELECT r.conname,
+                pg_catalog.pg_get_constraintdef(r.oid, true) as condef,
+                n.nspname as conschema
+          FROM  pg_catalog.pg_constraint r,
+                pg_namespace n,
+                pg_class c
+
+          WHERE r.conrelid = %(table)s AND
+                r.contype = 'f' AND
+                c.oid = confrelid AND
+                n.oid = c.relnamespace
+          ORDER BY 1
+        
+2022-07-04 14:00:07,705 INFO sqlalchemy.engine.Engine [generated in 0.00075s] {'table': 32780}
+2022-07-04 14:00:07,709 INFO sqlalchemy.engine.Engine 
+              SELECT
+                  i.relname as relname,
+                  ix.indisunique, ix.indexprs,
+                  a.attname, a.attnum, c.conrelid, ix.indkey::varchar,
+                  ix.indoption::varchar, i.reloptions, am.amname,
+                  pg_get_expr(ix.indpred, ix.indrelid),
+                  ix.indnkeyatts as indnkeyatts
+              FROM
+                  pg_class t
+                        join pg_index ix on t.oid = ix.indrelid
+                        join pg_class i on i.oid = ix.indexrelid
+                        left outer join
+                            pg_attribute a
+                            on t.oid = a.attrelid and a.attnum = ANY(ix.indkey)
+                        left outer join
+                            pg_constraint c
+                            on (ix.indrelid = c.conrelid and
+                                ix.indexrelid = c.conindid and
+                                c.contype in ('p', 'u', 'x'))
+                        left outer join
+                            pg_am am
+                            on i.relam = am.oid
+              WHERE
+                  t.relkind IN ('r', 'v', 'f', 'm', 'p')
+                  and t.oid = %(table_oid)s
+                  and ix.indisprimary = 'f'
+              ORDER BY
+                  t.relname,
+                  i.relname
+            
+2022-07-04 14:00:07,709 INFO sqlalchemy.engine.Engine [generated in 0.00027s] {'table_oid': 32780}
+2022-07-04 14:00:07,720 INFO sqlalchemy.engine.Engine 
+            SELECT
+                cons.conname as name,
+                cons.conkey as key,
+                a.attnum as col_num,
+                a.attname as col_name
+            FROM
+                pg_catalog.pg_constraint cons
+                join pg_attribute a
+                  on cons.conrelid = a.attrelid AND
+                    a.attnum = ANY(cons.conkey)
+            WHERE
+                cons.conrelid = %(table_oid)s AND
+                cons.contype = 'u'
+        
+2022-07-04 14:00:07,720 INFO sqlalchemy.engine.Engine [generated in 0.00029s] {'table_oid': 32780}
+2022-07-04 14:00:07,722 INFO sqlalchemy.engine.Engine 
+            SELECT
+                cons.conname as name,
+                pg_get_constraintdef(cons.oid) as src
+            FROM
+                pg_catalog.pg_constraint cons
+            WHERE
+                cons.conrelid = %(table_oid)s AND
+                cons.contype = 'c'
+        
+2022-07-04 14:00:07,722 INFO sqlalchemy.engine.Engine [generated in 0.00054s] {'table_oid': 32780}
+2022-07-04 14:00:07,724 INFO sqlalchemy.engine.Engine 
+            SELECT
+                pgd.description as table_comment
+            FROM
+                pg_catalog.pg_description pgd
+            WHERE
+                pgd.objsubid = 0 AND
+                pgd.objoid = %(table_oid)s
+        
+2022-07-04 14:00:07,724 INFO sqlalchemy.engine.Engine [generated in 0.00021s] {'table_oid': 32780}
+2022-07-04 14:00:07,726 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 14:00:07,726 INFO sqlalchemy.engine.Engine 
+DROP TABLE search
+2022-07-04 14:00:07,726 INFO sqlalchemy.engine.Engine [no key 0.00014s] {}
+2022-07-04 14:00:07,751 INFO sqlalchemy.engine.Engine COMMIT
+2022-07-04 14:00:07,755 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 14:00:07,756 INFO sqlalchemy.engine.Engine 
+CREATE TABLE search (
+	index BIGINT, 
+	"productId" BIGINT, 
+	"productName" TEXT, 
+	"productPrice" TEXT, 
+	"productImage" TEXT, 
+	"productUrl" TEXT, 
+	keyword TEXT, 
+	rank BIGINT, 
+	"isRocket" BOOLEAN, 
+	"isFreeShipping" BOOLEAN, 
+	tag TEXT
+)
+
+
+2022-07-04 14:00:07,756 INFO sqlalchemy.engine.Engine [no key 0.00021s] {}
+2022-07-04 14:00:07,782 INFO sqlalchemy.engine.Engine CREATE INDEX ix_search_index ON search (index)
+2022-07-04 14:00:07,782 INFO sqlalchemy.engine.Engine [no key 0.00051s] {}
+2022-07-04 14:00:07,787 INFO sqlalchemy.engine.Engine COMMIT
+2022-07-04 14:00:07,792 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 14:00:07,794 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 14:00:07,794 INFO sqlalchemy.engine.Engine [generated in 0.00058s] ({'index': 0, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 블랙', 'productPrice': '85,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/652e/674d3587937b6550a5e0869fbe87a36cf4add925c369f3e150289b407942.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388081&vendorItemId=71455730116&traceid=V0-153-27d89fddda7e5058&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 1, 'productId': 6139028599, 'productName': '이반가구 우드슬랩다리 사다리형 분체도장 철제 식탁 책상 테이블다리', 'productPrice': '48,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/696a/0fd2597f68666b9c725933ce3bc330c91cabf6e63a5c7abe00be67db2b0a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6139028599&itemId=11761253803&vendorItemId=79035074449&traceid=V0-153-5b68785d343a8117&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 2, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 2, 'productId': 4632259255, 'productName': 'H-101 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/bae7/38b942c0e8e3df139e3fd79ae226ccc55fd91c422be92e8287ee5f02f1d6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4632259255&itemId=5752598912&vendorItemId=73051213467&traceid=V0-153-ddeb0954c1654c80&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 3, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 3, 'productId': 5143848682, 'productName': 'H-109 우드슬랩 철재벤치다리, 테이블다리, 프레임(개당 판매), 블랙', 'productPrice': '50,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/26c4/4abd58062a214debc6ff5491737bb4db1dda46e5134dadaec3fc4283d62d.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5143848682&itemId=7057461590&vendorItemId=73067146447&traceid=V0-153-4141e34ab15e5033&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 4, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 4, 'productId': 4798904104, 'productName': '드림가구 우드슬랩X자다리-블랙 /철재다리/테이블/식탁/프레임(개당판매)', 'productPrice': '65,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/8e95/c2c416d9ab7f83629fffceeb8dbba14fae607aedb24ceb6083b00dca1989.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=4798904104&itemId=6157816516&vendorItemId=73453938663&traceid=V0-153-9ce8ef3dac1a25f2&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 5, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 5, 'productId': 2040754135, 'productName': '우드슬랩다리 우드슬랩철재다리 우드슬랩X자철재다리 책상철재다리 식탁철재다리 테이블철재다리 책상다리 테이블다리 식탁다리 가구다리 가구철재다리 국산 (상판별도구매), 화이트', 'productPrice': '80,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/856e/1d171e2300401254662e673962831112b29cf24edea010d64312601daaeb.png', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=2040754135&itemId=3469388078&vendorItemId=71455730090&traceid=V0-153-27d89fddda7e5058&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 6, 'isRocket': False, 'isFreeShipping': False, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 6, 'productId': 5264277757, 'productName': 'H-101-A 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/51f8/a4a4f333e46938b69894610a25c02508c527f9f18ae7080954700cf0463e.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5264277757&itemId=7485984355&vendorItemId=74776770210&traceid=V0-153-0e703fc354d44657&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 7, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 7, 'productId': 5147688486, 'productName': 'H-108 우드슬랩 철재다리, 테이블다리, 프레임(개당 판매), 샴페인 골드', 'productPrice': '45,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/c523/110d3b2a9416e35a7d50507e6af79ba1e3ca4948e640aaa05b43f1807d8f.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688486&itemId=7068712087&vendorItemId=73056027810&traceid=V0-153-70e6c9a2c9c80721&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 8, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 8, 'productId': 5147688478, 'productName': 'H-101 좌탁, 프레임, 우드슬랩 철재다리, 테이블다리(개당 판매), 샴페인 골드', 'productPrice': '30,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/e981/2db37da17da5c5027f899d0b66adb06097dc03aa23d8d51664da378e34e6.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5147688478&itemId=7068712070&vendorItemId=73797168227&traceid=V0-153-954039ebb3758a3e&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 9, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'}, {'index': 9, 'productId': 5141467219, 'productName': 'H-103 우드슬랩 철재벤치다리, 테이블다리, 프레임(2개 1SET), 샴페인 골드', 'productPrice': '35,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/f4d2/5fe020ad5b3f7e1f080c354b03e739c8079a06a2f85e1b13d8fec2080ba4.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=5141467219&itemId=7048365284&vendorItemId=73067051465&traceid=V0-153-4c8f18bacccda909&requestid=20220704230002951161420', 'keyword': '우드슬랩다리', 'rank': 10, 'isRocket': False, 'isFreeShipping': True, 'tag': '우드슬랩테이블다리, 우드슬랩철제다리'})
+2022-07-04 14:00:07,799 INFO sqlalchemy.engine.Engine COMMIT
+/home/gumeisbuy/web/service/search.py
+2022-07-04 14:08:08,690 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-04 14:08:08,691 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 14:08:08,692 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-04 14:08:08,693 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 14:08:08,694 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-04 14:08:08,694 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-04 14:08:08,696 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%(name)s
+2022-07-04 14:08:08,697 INFO sqlalchemy.engine.Engine [generated in 0.00033s] {'name': 'search'}
+2022-07-04 14:08:08,700 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2022-07-04 14:08:08,702 INFO sqlalchemy.engine.Engine INSERT INTO search (index, "productId", "productName", "productPrice", "productImage", "productUrl", keyword, rank, "isRocket", "isFreeShipping", tag) VALUES (%(index)s, %(productId)s, %(productName)s, %(productPrice)s, %(productImage)s, %(productUrl)s, %(keyword)s, %(rank)s, %(isRocket)s, %(isFreeShipping)s, %(tag)s)
+2022-07-04 14:08:08,702 INFO sqlalchemy.engine.Engine [generated in 0.00049s] ({'index': 0, 'productId': 212764798, 'productName': '원단싸 패턴 ] PATTERN 미셸 앞치마_ 770 패턴지', 'productPrice': '8,000', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/7bc4/1ffc8963a5db8db3bd5963d6632eb5c69171db3c28635e21769bcd572af8.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=212764798&itemId=642560235&vendorItemId=5130802349&traceid=V0-153-79c57e3a8db210ee&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 1, 'isRocket': False, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 1, 'productId': 50434761, 'productName': '이코디 베리어스 패턴 앞치마, 네이비 웨이브, 1개', 'productPrice': '10,310', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2017/11/29/14/6/d4a22132-a2eb-4032-be06-c6d848aa46fd.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=50434761&itemId=177779013&vendorItemId=3424913224&traceid=V0-153-208c78f5f978d296&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 2, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 2, 'productId': 6567838921, 'productName': '패턴자수 앞치마 어린이집 유치원 카페 주방 미용실 원예 3컬러, 패턴자수 버튼앞치마-블루(K)', 'productPrice': '24,900', 'productImage': 'https://static.coupangcdn.com/image/vendor_inventory/0566/d7f5f471243d44f67797051282ecb3bc427d4f854f68fead7de02c6ed855.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=6567838921&itemId=14731617938&vendorItemId=81972193675&traceid=V0-153-bd83c6f6df33f15e&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 3, 'isRocket': False, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 3, 'productId': 50434761, 'productName': '이코디 베리어스 패턴 앞치마, 옐로우 스퀘어, 1개', 'productPrice': '10,310', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2017/11/29/14/9/d139121d-7900-4b19-8f4e-1ae5a45e0034.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=50434761&itemId=177779024&vendorItemId=3424913223&traceid=V0-153-208c78f5f978d296&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 4, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 4, 'productId': 63229248, 'productName': '바이데코 북유럽패턴 앞치마 + 두건 세트, 스트라이프 블랙, 1세트', 'productPrice': '10,400', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2018/01/29/16/2/0ebe7df9-e511-440e-8d4c-b147cb4cf584.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=63229248&itemId=215374457&vendorItemId=3518483720&traceid=V0-153-f5e8f99ae819a77a&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 5, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 5, 'productId': 50434761, 'productName': '이코디 베리어스 패턴 앞치마, 네이비 와이파이, 1개', 'productPrice': '10,310', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2017/11/29/14/0/0c1f445e-97f4-4095-939f-fc69a1c412cd.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=50434761&itemId=177779030&vendorItemId=3424913229&traceid=V0-153-208c78f5f978d296&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 6, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 6, 'productId': 211181846, 'productName': '유노야 플라워 린넨 앞치마, 레드, 1개', 'productPrice': '19,690', 'productImage': 'https://static.coupangcdn.com/image/retail/images/294626318990548-616c2153-fb17-4629-8aca-bfde0ee3487a.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=211181846&itemId=632066970&vendorItemId=5388559169&traceid=V0-153-3ff1fae9f4fc9943&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 7, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 7, 'productId': 50434761, 'productName': '이코디 베리어스 패턴 앞치마, 베이지 트리, 1개', 'productPrice': '10,310', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2017/11/29/14/7/681209c2-30c4-495b-a5a0-698f57232936.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=50434761&itemId=177779022&vendorItemId=3424913225&traceid=V0-153-208c78f5f978d296&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 8, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 8, 'productId': 50433483, 'productName': '이코디 트로피칼 더블포켓 앞치마, 레몬글라스, 1개', 'productPrice': '16,250', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2017/11/29/11/9/ee293f1a-44cb-4bdc-8ea7-0642a4d9144b.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=50433483&itemId=177774213&vendorItemId=3424891603&traceid=V0-153-1a0320f8037b3aeb&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 9, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'}, {'index': 9, 'productId': 50434761, 'productName': '이코디 베리어스 패턴 앞치마, 블루 트리, 1개', 'productPrice': '10,310', 'productImage': 'https://static.coupangcdn.com/image/retail/images/2017/11/29/14/3/96a2ff31-91c1-4953-ab3e-892e31b0cbf7.jpg', 'productUrl': 'https://link.coupang.com/re/AFFSDP?lptag=AF4048649&subid=wordpress&pageKey=50434761&itemId=177779051&vendorItemId=3424913230&traceid=V0-153-208c78f5f978d296&requestid=20220704230803773130904', 'keyword': '앞치마패턴', 'rank': 10, 'isRocket': True, 'isFreeShipping': False, 'tag': '앞치마만들기, 앞치마 도안'})
+2022-07-04 14:08:08,708 INFO sqlalchemy.engine.Engine COMMIT
