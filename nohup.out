@@ -1,0 +1,19 @@
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [2684] using StatReload
+INFO:     Started server process [2686]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+ERROR:    [Errno 98] Address already in use
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EC%83%9D%ED%99%9C%EC%9A%A9%ED%92%88 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EC%B6%9C%EC%82%B0_%EC%9C%A0%EC%95%84%EB%8F%99 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /item/1540038879 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /item/static/js/item_scripts.js HTTP/1.0" 404 Not Found
+INFO:     180.233.200.112:0 - "GET /%EC%B6%9C%EC%82%B0_%EC%9C%A0%EC%95%84%EB%8F%99 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EC%8B%9D%ED%92%88 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EB%B0%98%EB%A0%A4%EB%8F%99%EB%AC%BC%EC%9A%A9%ED%92%88 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EB%B0%98%EB%A0%A4%EB%8F%99%EB%AC%BC%EC%9A%A9%ED%92%88 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EA%B0%80%EC%A0%84%EB%94%94%EC%A7%80%ED%84%B8 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
