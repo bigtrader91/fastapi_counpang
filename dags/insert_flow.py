@@ -8,9 +8,8 @@ from airflow.operators.dummy import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.trigger_rule import TriggerRule
 from datetime import datetime, timedelta
-from utils import SlackAlert
+from dags.utils import SlackAlert
 
-from service import 쿠팡검색기
 
 
 
@@ -39,16 +38,7 @@ dag_args = dict(
 
 
 def search_add():
-    from database.database import insert_data
-    import urllib.request
-
-    print('쿠팡 검색데이터 추가')
-    key='자전거'
-    search_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/search?keyword={urllib.parse.quote(key)}&limit=10&subId=wordpress"
-    items=쿠팡검색기(search_url,REQUEST_METHOD='GET')
-    df=pd.DataFrame(items['data']['productData'])
-    df['productPrice']=df['productPrice'].apply(lambda x: format(x, ',d'))
-    insert_data('search',df,if_exists='append')
+    print()
 
 
 

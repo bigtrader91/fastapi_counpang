@@ -1,24 +1,52 @@
-from pyparsing import col
+import random
+import psycopg2
+
+from starlette.applications import Starlette
+from starlette.middleware import Middleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.applications import Starlette
 from starlette.routing import Route, Mount
 from starlette.templating import Jinja2Templates
 from starlette.staticfiles import StaticFiles
 from starlette.applications import Starlette
 from starlette.requests import Request
-from starlette.responses import Response, RedirectResponse, StreamingResponse
+from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-import pandas as pd
-import random
-from summa.summarizer import summarize
+from starlette.responses import FileResponse
+
 from database.database import conn
-from service import items
-import psycopg2
+from service.service import items
 templates = Jinja2Templates(directory='template', autoescape=False, auto_reload=True)
 
 async def item(request):
     return templates.TemplateResponse('item.html', {'request': request})
+
+async def sitemap(request):
+    conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT DISTINCT "productId" FROM category;""")
+    data1 = cursor.fetchall() 
+    cursor.execute(f"""SELECT DISTINCT "productId" FROM search;""")
+    data2 = cursor.fetchall() 
+    data=data1+data2
+    return templates.TemplateResponse(
+        name="sitemap.xml",
+        media_type='application/xml',
+        context={
+            "request": request,
+            "data" : data,
+        },
+    )
+async def robots(request):
+    return templates.TemplateResponse(
+        name="robots.txt",
+        media_type='text/txt',
+        context={
+            "request": request,
+           
+        },
+    )
 
 async def index(request):
     best=[]
@@ -26,9 +54,10 @@ async def index(request):
     
         conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
         cursor = conn.cursor()
-        cursor.execute(f"""SELECT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{i}' and rank <= 8 ;""")
+        cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{i}' and rank <= 8 ;""")
 
         data = cursor.fetchall() 
+        
         temp=[]
         for c in range(0,8):
             temp_dic={}
@@ -53,25 +82,49 @@ async def index(request):
         },
     )
 
+###################################
+class MyMiddleware(BaseHTTPMiddleware):
+    async def dispatch(
+        self, request: Request, call_next
+    ) -> Response:
+        return await call_next(request)
+
+async def ping(request):
+    return Response("Some Text")
+
+
+
+#################################
+
+
 routes = [
     Route('/', endpoint=index),
     Route('/index', endpoint=index),
     Route('/item', endpoint=item),
-    Mount('/static', StaticFiles(directory='static'), name='static')
+    Route('/robots.txt', endpoint=robots,methods=['GET', 'POST']),
+    Route('/sitemap.xml', endpoint=sitemap,methods=['GET', 'POST']),
+    Route('/ping', ping, methods=['GET', 'POST']),
+    Mount('/static', StaticFiles(directory='static'), name='static'),
+    Mount('/template', StaticFiles(directory='template'), name='template')
 ]
 
 
 
 
-app = Starlette(debug=True, routes=routes)
-
+app = Starlette(
+    debug=False,
+    routes=routes,
+    middleware=[
+        Middleware(MyMiddleware),
+    ]
+)
 
 
 
 @app.route("/item/{productId:int}")
 async def item(request: Request ) -> Response:
     productId=request.path_params['productId']
-    print(productId)
+ 
     cursor = conn.cursor()
     cursor.execute(f"""SELECT DISTINCT * FROM category where "productId"='{productId}';""")
     data = cursor.fetchall() 
@@ -86,7 +139,6 @@ async def item(request: Request ) -> Response:
     rank=data[8]
     isRocket=data[9]
     isFreeShipping=data[10]
-    #review=summarize(text , words=50)
 
 
     if isRocket==True:
@@ -98,8 +150,8 @@ async def item(request: Request ) -> Response:
     else:
         isFreeShipping='❌'
 
-    print(categoryName)
-    cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{categoryName}';""")
+
+    cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{categoryName}' limit 20;""")
     Related_data = cursor.fetchall() 
     cnts=random.sample([i for i in range(0,len(data))],  8)
     temp=[]
@@ -126,19 +178,19 @@ async def item(request: Request ) -> Response:
             "rank":rank,
             "isRocket":isRocket,
             "isFreeShipping":isFreeShipping,
-            # "review":review,
+
             "temp":temp
         },
     )
 
 
 @app.route("/{category:str}")
-async def item(request: Request ) -> Response:
+async def category(request: Request ) -> Response:
     cat=request.path_params['category']
     cat=cat.replace("_","/")
     conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
     cursor = conn.cursor()
-    cursor.execute(f"""SELECT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{cat}';""")
+    cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{cat}' limit 50;""")
     data = cursor.fetchall() 
     temp_cat=[]
     for c in range(0,40):
@@ -150,9 +202,6 @@ async def item(request: Request ) -> Response:
         temp_dic['주소']=data[c][4]
         temp_cat.append(temp_dic)
     
-    
-
-    
     return templates.TemplateResponse(
         name="category.html",
         context={
@@ -161,4 +210,3 @@ async def item(request: Request ) -> Response:
 
         },
     )
-
