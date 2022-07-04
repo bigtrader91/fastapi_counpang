@@ -1,5 +1,3 @@
-
-
 from sqlalchemy import create_engine
 
 import psycopg2
@@ -25,7 +23,7 @@ def create_db(DB_NAME):
     conn.close()
 
 
-def insert_data(name,df,if_exists='append'):
+def insert_data(name,df,engine,if_exists='append' ):
     try:
         df.to_sql(
             name=name,
@@ -36,15 +34,26 @@ def insert_data(name,df,if_exists='append'):
 
 
 
-# SessionLocal = sessionmaker(bind=engine)
-
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
-
-
+items={
+    '여성패션':1001,
+    '남성패션':1002,
+    '뷰티':1010,
+    '출산/유아동':1011,
+    '식품':1012,
+    '주방용품':1013,
+    '생활용품':1014,
+    '홈인테리어':1015,
+    '가전디지털':1016,
+    '스포츠/레저':1017,
+    '자동차용품':1018,
+    '도서/음반/DVD':1019,
+    '완구/취미':1020,
+    '문구/오피스':1021,
+    '헬스/건강식품':1024,
+    '국내여행':1025,
+    '해외여행':1026,
+    '반려동물용품':1029,
+    '유아동패션':1030
+}
 
 

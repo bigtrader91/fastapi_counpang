@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="description" content="각 상품별 카테고리 페이지입니다. 패션, 뷰티, 출산유아동, 식품, 주방용품, 생활용품, 레저, 자동차, 도서 음반, 반려동물용품 등이 있습니다." />
+        <meta name="author" content="gumegume" />
+        <meta name="Robots" content="ALL">
         <title>GumeGume</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="static/assets/구메구메.ico" />
@@ -17,7 +18,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="http://127.0.0.1:8000/">GumeGume</a>
+                <a class="navbar-brand" href="/">GumeGume</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -70,7 +71,8 @@
             
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="text-center text-black">
-                    <h2 class="display-4 fw-bolder">{{ temp_cat[0]['카테고리'] }}</h2>
+                    <div><iframe src="https://ads-partners.coupang.com/widgets.html?id=592015&template=carousel&trackingCode=AF4048649&subId=&width=680&height=140" width="680" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe></div>
+
                     <br><br><br>
                 </div>
                 
@@ -84,14 +86,14 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ cat['상품명'] }}</h5>
+                                    <h6 class="fw-bolder">{{ cat['상품명'] }}</h6>
                                     <!-- Product price-->
                                     {{ cat['가격']}}원
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ cat['주소'] }}">구매하기</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ cat['주소'] }}">🔎 자세히 보기</a></div>
                             </div>
                         </div>
                     </div>
@@ -108,7 +110,7 @@
 
 
 
-            
+            <iframe src="https://ads-partners.coupang.com/widgets.html?id=592017&template=carousel&trackingCode=AF4048649&subId=&width=900&height=100" width="2000" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
