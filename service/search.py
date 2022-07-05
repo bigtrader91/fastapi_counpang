@@ -34,10 +34,3 @@ bot.send_message(chat_id=chat_id, text=f'시간 : {nowT}  |  키워드 : {key}')
 joblib.dump(keyword_list,'/home/gumeisbuy/web/service/키워드모음2.pkl')
 
 
-# while True:
-#     if len(keyword_list)==0:
-                
-#         break
-#     key=keyword_list.pop()
-#     쿠팡검색기
-#     time.sleep(60*7)

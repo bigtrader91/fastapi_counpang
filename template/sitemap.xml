@@ -1,12 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    {% for item in data %}
     <url>
-      <loc>https://gumegume.shop/{{ item[0] }}</loc>
+      <loc>http://gumegume.shop/</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>1.00</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%97%AC%EC%84%B1%ED%8C%A8%EC%85%98</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EB%82%A8%EC%84%B1%ED%8C%A8%EC%85%98</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EB%B7%B0%ED%8B%B0</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%B6%9C%EC%82%B0_%EC%9C%A0%EC%95%84%EB%8F%99</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%9C%A0%EC%95%84%EB%8F%99%ED%8C%A8%EC%85%98</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%8B%9D%ED%92%88</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%A3%BC%EB%B0%A9%EC%9A%A9%ED%92%88</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%83%9D%ED%99%9C%EC%9A%A9%ED%92%88</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%ED%99%88%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EA%B0%80%EC%A0%84%EB%94%94%EC%A7%80%ED%84%B8</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%8A%A4%ED%8F%AC%EC%B8%A0_%EB%A0%88%EC%A0%80</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%A9%ED%92%88</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EB%8F%84%EC%84%9C_%EC%9D%8C%EB%B0%98_DVD</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%ED%97%AC%EC%8A%A4_%EA%B1%B4%EA%B0%95%EC%8B%9D%ED%92%88</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EC%99%84%EA%B5%AC_%EC%B7%A8%EB%AF%B8</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EB%B0%98%EB%A0%A4%EB%8F%99%EB%AC%BC%EC%9A%A9%ED%92%88</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EB%AC%B8%EA%B5%AC_%EC%98%A4%ED%94%BC%EC%8A%A4</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%EA%B5%AD%EB%82%B4%EC%97%AC%ED%96%89</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://gumegume.shop/%ED%95%B4%EC%99%B8%EC%97%AC%ED%96%89</loc>
+      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+
+    {% for item in category %}
+    <url>
+      <loc>https://gumegume.shop/item/{{ item[0] }}</loc>
       <changefreq>weekly</changefreq>
       <priority>0.85</priority>
     </url>
     {% endfor %}
 
+    {% for item2 in search %}
+    <url>
+      <loc>https://gumegume.shop/search/{{ item2[0] }}</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.85</priority>
+    </url>
+    {% endfor %}
 </urlset>

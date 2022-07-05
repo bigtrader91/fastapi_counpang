@@ -1,8 +1,6 @@
 import random
 import psycopg2
 
-from starlette.applications import Starlette
-from starlette.applications import Starlette
 from starlette.routing import Route, Mount
 from starlette.templating import Jinja2Templates
 from starlette.staticfiles import StaticFiles
@@ -10,11 +8,14 @@ from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
-from starlette.templating import Jinja2Templates
-
 
 from database.database import conn
 from service.service import items
+from exceptions.handlers import exception_handlers
+from middlewares import middleware
+
+
+
 templates = Jinja2Templates(directory='template', autoescape=False, auto_reload=True)
 
 async def item(request):
@@ -30,16 +31,17 @@ async def sitemap(request):
     conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
     cursor = conn.cursor()
     cursor.execute(f"""SELECT DISTINCT "productId" FROM category;""")
-    data1 = cursor.fetchall() 
+    category = cursor.fetchall() 
     cursor.execute(f"""SELECT DISTINCT "productId" FROM search;""")
-    data2 = cursor.fetchall() 
-    data=data1+data2
+    search = cursor.fetchall() 
+    
     return templates.TemplateResponse(
         name="sitemap.xml",
         media_type='application/xml',
         context={
             "request": request,
-            "data" : data,
+            "category" : category,
+            "search" : search,
         },
     )
 async def robots(request):
@@ -100,8 +102,8 @@ routes = [
 
 
 
+app = Starlette(debug=True, routes=routes, exception_handlers=exception_handlers)
 
-app = Starlette( debug=False, routes=routes)
 
 
 
@@ -232,18 +234,19 @@ async def item(request: Request ) -> Response:
         isFreeShipping='❌'
 
 
-    # cursor.execute(f"""SELECT DISTINCT "keyword", "productName", "productPrice", "productImage", "productUrl" FROM category where "keyword"='{keyword}' limit 4;""")
-    # Related_data = cursor.fetchall() 
-    # cnts=random.sample([i for i in range(0,len(data))], 4)
-    # temp=[]
-    # for c in cnts:
-    #     temp_dic={}
-    #     temp_dic['키워드']=Related_data[c][0]
-    #     temp_dic['상품명']=Related_data[c][1]
-    #     temp_dic['가격']=Related_data[c][2]
-    #     temp_dic['이미지']=Related_data[c][3]
-    #     temp_dic['주소']=Related_data[c][4]
-    #     temp.append(temp_dic)
+    cursor.execute(f"""SELECT DISTINCT "keyword", "productName", "productPrice", "productImage", "productUrl" FROM search where "keyword"='{keyword}' ;""")
+    Related_data = cursor.fetchall() 
+    # cnts=random.sample([i for i in range(0,len(Related_data))], 4)
+    temp=[]
+    print(len(Related_data))
+    for c in range(0,len(Related_data)):
+        temp_dic={}
+        temp_dic['키워드']=Related_data[c][0]
+        temp_dic['상품명']=Related_data[c][1]
+        temp_dic['가격']=Related_data[c][2]
+        temp_dic['이미지']=Related_data[c][3]
+        temp_dic['주소']=Related_data[c][4]
+        temp.append(temp_dic)
 
     
     return templates.TemplateResponse(
@@ -260,6 +263,6 @@ async def item(request: Request ) -> Response:
             "isFreeShipping":isFreeShipping,
             'tag':tag,
 
-            # "temp":temp
+            "temp":temp
         },
     )
