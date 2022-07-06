@@ -9,7 +9,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 middleware = [
     Middleware(TrustedHostMiddleware, allowed_hosts=['gumegume.shop', '*.gumegume.shop']),
-    Middleware(HTTPSRedirectMiddleware),
+    # Middleware(HTTPSRedirectMiddleware),
     Middleware(CORSMiddleware, allow_origins=['*']),
     Middleware(GZipMiddleware, minimum_size=500)
 ]

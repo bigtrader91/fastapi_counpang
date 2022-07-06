@@ -1,6 +1,7 @@
 import random
 import psycopg2
 
+
 from starlette.routing import Route, Mount
 from starlette.templating import Jinja2Templates
 from starlette.staticfiles import StaticFiles
@@ -9,14 +10,16 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.staticfiles import StaticFiles
 
-from database.database import conn
-from service.service import items
-from exceptions.handlers import exception_handlers
-from middlewares import middleware
+
+from app.utils import cleanText
+from app.database.database import conn
+from app.service.service import items
+from app.exceptions.handlers import exception_handlers
+from app.middlewares import middleware
 
 
 
-templates = Jinja2Templates(directory='template', autoescape=False, auto_reload=True)
+templates = Jinja2Templates(directory='app/template', autoescape=False, auto_reload=True)
 
 async def item(request):
     return templates.TemplateResponse('item.html', {'request': request})
@@ -26,6 +29,8 @@ async def search(request):
 
 async def category(request):
     return templates.TemplateResponse('category.html', {'request': request})
+
+
 
 async def sitemap(request):
     conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
@@ -44,6 +49,47 @@ async def sitemap(request):
             "search" : search,
         },
     )
+async def rss(request):
+    conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT DISTINCT "productId", "productName",  "productImage",  "keyword",  "tag" FROM category;""")
+    category = cursor.fetchall() 
+    cursor.execute(f"""SELECT DISTINCT  "productId", "productName",  "productImage",  "keyword",  "tag" FROM search;""")
+    search = cursor.fetchall() 
+    category2=[]
+    for i in category:
+        temp={}
+
+        temp['ID']=i[0]
+        temp['상품명']=cleanText(i[1])
+        temp['이미지']=i[2]
+        temp['키워드']=i[3]
+        temp['태그']=i[4]
+        category2.append(temp)
+
+    search2=[]
+    for i in search:
+        temp={}
+
+        temp['ID']=i[0]
+        temp['상품명']=cleanText(i[1])
+        temp['이미지']=i[2]
+        temp['키워드']=i[3]
+        temp['태그']=i[4]
+        search2.append(temp)
+
+
+    return templates.TemplateResponse(
+        name="rss.rss",
+        media_type='application/xml',
+        context={
+            "request": request,
+            "category2" : category2,
+            "search2":search2,
+        },
+    )
+
+
 async def robots(request):
     return templates.TemplateResponse(
         name="robots.txt",
@@ -61,12 +107,12 @@ async def index(request):
     
         conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
         cursor = conn.cursor()
-        cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{i}' and rank <= 8 ;""")
+        cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{i}' and rank <= 4 ;""")
 
         data = cursor.fetchall() 
         
         temp=[]
-        for c in range(0,8):
+        for c in range(0,4):
             temp_dic={}
             temp_dic['카테고리']=data[c][0]
             temp_dic['상품명']=data[c][1]
@@ -89,6 +135,8 @@ async def index(request):
 
 
 
+
+
 routes = [
     Route('/', endpoint=index),
     Route('/index', endpoint=index),
@@ -96,13 +144,14 @@ routes = [
     Route('/search', endpoint=search),
     Route('/category', endpoint=category),
     Route('/robots.txt', endpoint=robots,methods=['GET', 'POST']),
-    Route('/sitemap.xml', endpoint=sitemap,methods=['GET', 'POST']),
-    Mount('/static', StaticFiles(directory='static'), name='static')
+    Route('/sitemap.xml', endpoint=sitemap, methods=['GET', 'POST']),
+    Route('/rss', endpoint=rss, methods=['GET', 'POST']),
+    Mount('/static', StaticFiles(directory='app/static'), name='static')
 ]
 
 
 
-app = Starlette(debug=True, routes=routes, exception_handlers=exception_handlers)
+app = Starlette(debug=True, routes=routes, middleware=middleware, exception_handlers=exception_handlers)
 
 
 
@@ -172,14 +221,23 @@ async def item(request: Request ) -> Response:
     )
 ######################################################################################
 
+
 @app.route("/{category:str}")
-async def category(request: Request ) -> Response:
+async def category(request: Request , page:int=1 ) -> Response:
+    
+    
+    #int(request.query_params['page'])
+    
+    
     cat=request.path_params['category']
+
+    print(cat)
     cat=cat.replace("_","/")
     conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
     cursor = conn.cursor()
-    cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{cat}' limit 28;""")
+    cursor.execute(f"""SELECT DISTINCT "categoryName", "productName", "productPrice", "productImage", "productUrl" FROM category where "categoryName"='{cat}' limit 28 offset 0;""")
     data = cursor.fetchall() 
+
     temp_cat=[]
     for c in range(0,28):
         try:
@@ -197,7 +255,8 @@ async def category(request: Request ) -> Response:
         name="category.html",
         context={
             "request": request,
-            "temp_cat" : temp_cat
+            "temp_cat" : temp_cat,
+          
 
         },
     )
@@ -234,7 +293,7 @@ async def item(request: Request ) -> Response:
         isFreeShipping='❌'
 
 
-    cursor.execute(f"""SELECT DISTINCT "keyword", "productName", "productPrice", "productImage", "productUrl" FROM search where "keyword"='{keyword}' ;""")
+    cursor.execute(f"""SELECT DISTINCT "keyword", "productName", "productPrice", "productImage", "productUrl" FROM search where "keyword"='{keyword}' and "productName" != '{productName}';""")
     Related_data = cursor.fetchall() 
     # cnts=random.sample([i for i in range(0,len(Related_data))], 4)
     temp=[]

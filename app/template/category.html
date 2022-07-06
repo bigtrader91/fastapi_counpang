@@ -13,6 +13,10 @@
         <meta property="og:description" content="흥미로운 상품들을 추천해주는 종합 쇼핑채널입니다^^">
         <meta property="og:image" content="static/assets/구메구메.ico">
         <meta property="og:url" content="http://gumegume.shop">
+        <!-- 핀터레스트 -->
+        <meta name="p:domain_verify" content="ac77f45850bd1b90010b0ed312fa1b4d"/>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5516338840795705"
+         crossorigin="anonymous"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXTZG2FYFZ"></script>
         <script>
@@ -73,11 +77,12 @@
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
+        <header class="bg-dark py-5" >
+  
 
-                    <h1 class="display-4 fw-bolder">GumeGume</h1>
+                <div class="text-center text-white">
+                    
+                    <h1 class="display-4 fw-bolder" >GumeGume</h1>
                     <p class="lead fw-normal text-white-50 mb-0">Secretly from time to time</p>
                 </div>
             </div>
@@ -86,14 +91,21 @@
         <section class="py-5">
             
             <div class="container px-4 px-lg-5 mt-5">
+                <h2><b>{{temp_cat[0]['카테고리']}}</b></h2>
+        
+                <!-- <img src="static/assets/의류2.jpg" title="" alt="" data-edit="false" data-editor="field" class="rounded mgb-20" style="width: 100%; background: #555555" data-v-0b78704d=""> -->
+                <!-- <div><iframe src="https://ads-partners.coupang.com/widgets.html?id=592015&template=carousel&trackingCode=AF4048649&subId=&width=680&height=140" width="680" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe></div> -->
+                <hr style="border: solid 1.5px black;">
+
                 <div class="text-center text-black">
-                    <!-- <div><iframe src="https://ads-partners.coupang.com/widgets.html?id=592015&template=carousel&trackingCode=AF4048649&subId=&width=680&height=140" width="680" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe></div> -->
+                    
 
                     <br><br><br>
                 </div>
                 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {% for cat in temp_cat %}
+                    
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
@@ -122,7 +134,7 @@
             <br>
             <hr style="border: solid 1.5px black;">
 
-            
+
 
 
 
