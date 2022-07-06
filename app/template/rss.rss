@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  {% for item in search2 %}
+  <item>
+    <description>#{{ item['키워드'] }}  {{ item['태그'] }}</description>
+    <title>{{ item['상품명'] }}</title>
+    <image>{{ item['이미지'] }}</image>
+    <link>http://gumegume.shop/search/{{ item['ID'] }}</link>
+
+  </item>
+  {% endfor %}
+
+  {% for item2 in category2 %}
+  <item>
+    <description>#{{ item2['키워드'] }}  {{ item2['태그'] }}</description>
+    <title>{{ item2['상품명'] }}</title>
+    <image>{{ item2['이미지'] }}</image>
+    <link>http://gumegume.shop/item/{{ item2['ID'] }}</link>
+
+  </item>
+  {% endfor %}
+</channel>
+</rss>
