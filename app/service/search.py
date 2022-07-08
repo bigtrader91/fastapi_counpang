@@ -1,3 +1,6 @@
+import sys
+
+sys.path.append("/home/gumeisbuy/web/")
 import pandas as pd
 import telegram
 from sqlalchemy import create_engine
@@ -6,23 +9,32 @@ import joblib
 import datetime
 from service import 연관검색어, 쿠팡검색기, insert_data
 
+from config import settings
+
 nowT = datetime.datetime.now()
 path = "/home/gumeisbuy/web/app/service/키워드모음2.pkl"
 
-telgm_token = "1108135935:AAEzD9fUZxII258ELQm3ah_gej1E3LqLlmU"
-chat_id = 1069639277
+telgm_token = settings.telgm_token
+chat_id = settings.chat_id
 bot = telegram.Bot(token=telgm_token)
 if_exists = "append"
 
-engine = create_engine("postgresql://search:1234@localhost/coupang", echo=True)
+engine = create_engine(
+    settings.search_uri,
+    echo=True,
+)
+
 keyword_list = joblib.load(path)
 
 key = keyword_list.pop()
 search_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/search?keyword=\
-    {urllib.parse.quote(key)}&limit=10&subId=wordpress"
+    {urllib.parse.quote(key)}&limit=10&subId=wordpress&imageSize=256x256"
+
 items = 쿠팡검색기(search_url, REQUEST_METHOD="GET")
+print(items, "intem~~~~~~~")
 
 df = pd.DataFrame(items["data"]["productData"])
+print(df)
 df["productPrice"] = df["productPrice"].apply(lambda x: format(x, ",d"))
 df["tag"] = df["keyword"]
 df["tag"] = df["tag"].apply(lambda x: 연관검색어(x))  # 연관검색어 열 추가

@@ -1,21 +1,28 @@
+import sys
+
+sys.path.append("/home/gumeisbuy/web/")
 import time
 import pandas as pd
 from sqlalchemy import create_engine
 from service import 연관검색어, 쿠팡검색기, insert_data, items
 import telegram
+from config import settings
 
-
-telgm_token = "1108135935:AAEzD9fUZxII258ELQm3ah_gej1E3LqLlmU"
-chat_id = 1069639277
+telgm_token = settings.telgm_token
+chat_id = settings.chat_id
 bot = telegram.Bot(token=telgm_token)
 if_exists = "append"
 
-engine = create_engine("postgresql://best:1234@localhost/coupang", echo=True)
+engine = create_engine(
+    settings.best_uri,
+    echo=True,
+)
+
 
 dfs = []
 for val in items.values():
     best_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/bestcategories/\
-        {val}?limit=100&subId=wordpress"
+        {val}?limit=100&subId=wordpress&imageSize=256x256"
     item_dict = 쿠팡검색기(best_url)
     time.sleep(7)
     df = pd.DataFrame(item_dict["data"])

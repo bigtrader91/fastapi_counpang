@@ -2,6 +2,6 @@
 !search.log
 !app.log
 
-
+!config.py
 __pycache__/
 *.pyc

@@ -1,11 +1,7 @@
 from starlette.requests import Request
 from starlette.responses import Response
 from app.database.database import conn
-from starlette.templating import Jinja2Templates
-
-templates = Jinja2Templates(
-    directory="app/template", autoescape=False, auto_reload=True
-)
+from app.utils import templates
 
 
 async def search(request: Request) -> Response:

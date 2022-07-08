@@ -1,23 +1,12 @@
-import psycopg2
-from starlette.templating import Jinja2Templates
 from app.service.service import items
-
-templates = Jinja2Templates(
-    directory="app/template", autoescape=False, auto_reload=True
-)
+from app.database.database import conn
+from app.utils import templates
 
 
 async def index(request):
     best = []
     for i in items:
 
-        conn = psycopg2.connect(
-            host="localhost",
-            database="coupang",
-            user="postgres",
-            password="postgres",
-            port=5432,
-        )
         cursor = conn.cursor()
         cursor.execute(
             f"""SELECT DISTINCT "categoryName", "productName", \

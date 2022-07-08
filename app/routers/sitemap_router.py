@@ -1,19 +1,9 @@
-import psycopg2
-from starlette.templating import Jinja2Templates
-
-templates = Jinja2Templates(
-    directory="app/template", autoescape=False, auto_reload=True
-)
+from app.database.database import conn
+from app.utils import templates
 
 
 async def sitemap(request):
-    conn = psycopg2.connect(
-        host="localhost",
-        database="coupang",
-        user="postgres",
-        password="postgres",
-        port=5432,
-    )
+
     cursor = conn.cursor()
     cursor.execute("""SELECT DISTINCT "productId" FROM category;""")
     category = cursor.fetchall()

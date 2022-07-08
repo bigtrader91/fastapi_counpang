@@ -1,10 +1,9 @@
 from app.utils import templates
 
 
-async def robots(request):
+async def counting(request):
     return templates.TemplateResponse(
-        name="robots.txt",
-        media_type="text/txt",
+        name="counting.html",
         context={
             "request": request,
         },
