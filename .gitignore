@@ -1,0 +1,7 @@
+!.env
+!search.log
+!app.log
+
+
+__pycache__/
+*.pyc
