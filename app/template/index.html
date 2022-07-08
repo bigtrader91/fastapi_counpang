@@ -7,7 +7,7 @@
         <meta name="author" content="gumegume" />
         <meta name="Robots" content="ALL">
 
-        <meta property="og:type" content="website"> 
+        <meta property="og:type" content="website">
         <meta property="og:title" content="GumeGume">
         <meta property="og:description" content="흥미로운 상품들을 추천해주는 종합 쇼핑채널입니다^^">
         <meta property="og:image" content="static/assets/구메구메.ico">
@@ -30,7 +30,7 @@
         </script>
         <title>GumeGume</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/구메구메.ico" />
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/assets/구메구메.ico') }}" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -44,7 +44,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                       
+
                         <li class="nav-item"><a class="nav-link" href="/여성패션">여성의류</a></li>
                         <li class="nav-item"><a class="nav-link" href="/남성패션">남성의류</a></li>
                         <li class="nav-item"><a class="nav-link" href="/뷰티">뷰티</a></li>
@@ -92,14 +92,14 @@
             <!-- <div><iframe src="https://ads-partners.coupang.com/widgets.html?id=592015&template=carousel&trackingCode=AF4048649&subId=&width=680&height=140" width="500" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe></div> -->
 
             <div class="container px-4 px-lg-5 mt-5">
-                
+
                 {% for cat in best %}
-                
+
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-                
+
                     {% for rank in cat %}
-                    
+
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
@@ -119,19 +119,19 @@
                             </div>
                         </div>
                     </div>
-         
+
                     {% endfor %}
-                
+
 
                 <a href="/{{cat[0]['카테고리']|replace('/','_')}}" class="btn btn-lg btn-light btn-block m-1" data-v-0b78704d="">
                 <h3>{{cat[0]['카테고리']}} 더보기</h3>
-                </a>  
-        
-                    
+                </a>
+
+
             </div>
             <br>
             <br>
-  
+
             <br>
             <hr style="border: solid 1.5px black;">
 
