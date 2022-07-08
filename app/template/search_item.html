@@ -7,7 +7,7 @@
         <meta name="Keywords" content="{{tag}}">
         <meta name="author" content="gumegume" />
         <meta name="Robots" content="ALL">
-        <meta property="og:type" content="website"> 
+        <meta property="og:type" content="website">
         <meta property="og:title" content="GumeGume">
         <meta property="og:description" content="흥미로운 상품들을 추천해주는 종합 쇼핑채널입니다^^">
         <meta property="og:image" content="static/assets/구메구메.ico">
@@ -28,7 +28,7 @@
 
         <title>GumeGume</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="static/assets/구메구메.ico"/>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/assets/구메구메.ico') }}"/>
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -76,7 +76,7 @@
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6"><a href="{{productUrl}}" target="_blank"><img class="card-img-top mb-5 mb-md-0" src="{{productImage}}" alt="{{productName}}"  /></a></div>
                     <div class="col-md-6">
-                        
+
                         <h4 class="display-6 fw-bolder">{{productName}}</h4>
                         <br>
                         <div class="fs-4 mb-4">
@@ -85,24 +85,26 @@
                         <div class="fs-4 mb-4">
                             <span>🚀로켓배송 : {{isRocket}}  |  🚚무료배송 : {{isFreeShipping}}</span>
                         </div>
-                        
+
                         <div class="fs-4 mb-4">
                             <span>💰가격 : {{productPrice}} 원</span>
                         </div>
                         <div class="fs-4 mb-4">
                             <span>연관검색어 : {{tag}}</span>
                         </div>
-                       
+
 
                         <p class="lead"></p>
                         <div class="d-flex">
-                            
+
                             <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="window.open('{{productUrl}}')">
-                                
+
                                 <h4>🔎 자세히 보기</h4>
                             </button>
-                          
+
                         </div>
+                        <hr>
+                        <p align="left"> 사진 혹은 버튼 클릭시 쿠팡 상세페이지로 연결되며, 구매시 3%의 수수료를 제공받습니다.(구매가격에는 영향을 주지 않습니다) </p>
                     </div>
                 </div>
             </div>
@@ -133,7 +135,7 @@
                         </div>
                     </div>
                     {% endfor %}
-                   
+
                 </div>
             </div>
             <!-- <iframe src="https://ads-partners.coupang.com/widgets.html?id=592017&template=carousel&trackingCode=AF4048649&subId=&width=900&height=100" width="1000" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe> -->
