@@ -2,13 +2,22 @@ from sqlalchemy import create_engine
 
 import psycopg2
 from psycopg2 import extensions
+from config import settings
 
 engine = create_engine(
-    f"postgresql://postgres:postgres@localhost/coupang",
+    settings.db_uri,
     echo=True,
 )
 
-conn = psycopg2.connect(host='localhost', database='coupang',user='postgres',password='postgres',port=5432)
+
+conn = psycopg2.connect(
+    host=settings.host,
+    database=settings.database,
+    user="postgres",
+    password=settings.password,
+    port=settings.port,
+)
+
 
 def create_db(DB_NAME):
 
@@ -23,16 +32,8 @@ def create_db(DB_NAME):
     conn.close()
 
 
-def insert_data(name,df,engine,if_exists='append' ):
+def insert_data(name, df, engine, if_exists="append"):
     try:
-        df.to_sql(
-            name=name,
-            con=engine,
-            if_exists=if_exists)
+        df.to_sql(name=name, con=engine, if_exists=if_exists)
     except Exception as ex:
         print("insert_data error :", ex)
-
-
-
-
-

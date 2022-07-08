@@ -1,24 +1,14 @@
-import psycopg2
 from starlette.requests import Request
 from starlette.responses import Response
-from starlette.templating import Jinja2Templates
-
-
-templates = Jinja2Templates(
-    directory="app/template", autoescape=False, auto_reload=True
-)
+from app.database.database import conn
+from app.utils import templates
 
 
 async def category(request: Request, page: int = 1) -> Response:
     cat = request.path_params["category"]
+
     cat = cat.replace("_", "/")
-    conn = psycopg2.connect(
-        host="localhost",
-        database="coupang",
-        user="postgres",
-        password="postgres",
-        port=5432,
-    )
+
     cursor = conn.cursor()
     cursor.execute(
         f"""SELECT DISTINCT "categoryName", "productName",\

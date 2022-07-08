@@ -34,7 +34,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
+        <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -45,24 +45,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 
-                        <li class="nav-item"><a class="nav-link" href="/여성패션">여성의류</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/남성패션">남성의류</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/뷰티">뷰티</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/출산_유아동">육아</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/유아동패션">유아동패션</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/식품">식품</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/주방용품">주방</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/생활용품">생활</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/홈인테리어">인테리어</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/가전디지털">전자가전</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/스포츠_레저">스포츠</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/자동차용품">자동차</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/도서_음반_DVD">도서/음반</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/헬스_건강식품">건강</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/완구_취미">취미</a></li>
-
-                        <li class="nav-item"><a class="nav-link" href="/반려동물용품">반려동물</a></li>
-
+                        <li class="nav-item"><a class="nav-link" href="/category/여성패션">여성의류</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/남성패션">남성의류</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/뷰티">뷰티</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/출산_유아동">육아</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/유아동패션">유아동패션</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/식품">식품</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/주방용품">주방</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/생활용품">생활</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/홈인테리어">인테리어</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/가전디지털">전자가전</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/스포츠_레저">스포츠</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/자동차용품">자동차</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/도서_음반_DVD">도서/음반</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/헬스_건강식품">건강</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/완구_취미">취미</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/category/반려동물용품">반려동물</a></li>
 
 
                         </li>
@@ -92,9 +90,6 @@
             <!-- <div><iframe src="https://ads-partners.coupang.com/widgets.html?id=592015&template=carousel&trackingCode=AF4048649&subId=&width=680&height=140" width="500" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe></div> -->
 
             <div class="container px-4 px-lg-5 mt-5">
-                <hr>
-                <p align="left"> 사진 혹은 버튼 클릭시 쿠팡 상세페이지로 연결되며, 구매시 3%의 수수료를 제공받습니다.(구매가격에는 영향을 주지 않습니다) </p>
-                <hr>
                 {% for cat in best %}
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

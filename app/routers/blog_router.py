@@ -1,10 +1,9 @@
 from app.utils import templates
 
 
-async def robots(request):
+async def blog(request):
     return templates.TemplateResponse(
-        name="robots.txt",
-        media_type="text/txt",
+        name="blog.txt",
         context={
             "request": request,
         },

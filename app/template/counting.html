@@ -1,0 +1,40 @@
+<script type="text/javascript">
+
+    $(function(){
+    $('textarea.content').keyup(function(){
+    bytesHandler(this);
+    });
+    });
+
+    function getTextLength(str) {
+    var len = 0;
+
+    for (var i = 0; i < str.length; i++) {
+    if (escape(str.charAt(i)).length == 6) {
+    len++;
+    }
+    len++;
+    }
+    return len;
+    }
+
+    function bytesHandler(obj){
+    var text = $(obj).val();
+    $('p.bytes').text(getTextLength(text));
+    }
+
+    </script>
+
+
+
+
+
+
+
+    <ul class="handler-ul">
+
+    <li><p class="bytes">0</p></li>
+
+    <li><textarea class="content"></textarea></li>
+
+    </ul>
