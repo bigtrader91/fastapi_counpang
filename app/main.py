@@ -5,6 +5,7 @@ from starlette.applications import Starlette
 
 from app.exceptions.handlers import exception_handlers
 from app.middlewares import middleware
+
 from app.routers.robots_router import robots
 from app.routers.sitemap_router import sitemap
 from app.routers.rss_router import rss
