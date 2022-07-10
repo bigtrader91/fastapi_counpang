@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from app.utils import templates
 
 
-async def topjongmok(request: Request) -> Response:
+async def 검색상위종목(request: Request) -> Response:
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.0.0 Safari/537.36"
@@ -35,6 +35,6 @@ async def topjongmok(request: Request) -> Response:
     now = (datetime.now() - timedelta(hours=-9)).strftime("%Y년 %m월 %d일 %H시 %M분")
     year = datetime.now().year
     return templates.TemplateResponse(
-        name="topjongmok.html",
+        name="검색상위종목.html",
         context={"request": request, "data": data, "now": now, "year": year},
     )

@@ -27,11 +27,9 @@ engine = create_engine(
 keyword_list = joblib.load(path)
 
 key = keyword_list.pop()
-search_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/search?keyword=\
-    {urllib.parse.quote(key)}&limit=10&subId=wordpress&imageSize=256x256"
+search_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/search?keyword={urllib.parse.quote(key)}&limit=10&subId=wordpress&imageSize=256x256"
 
 items = 쿠팡검색기(search_url, REQUEST_METHOD="GET")
-print(items, "intem~~~~~~~")
 
 df = pd.DataFrame(items["data"]["productData"])
 print(df)

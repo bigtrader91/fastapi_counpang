@@ -21,8 +21,7 @@ engine = create_engine(
 
 dfs = []
 for val in items.values():
-    best_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/bestcategories/\
-        {val}?limit=100&subId=wordpress&imageSize=256x256"
+    best_url = f"/v2/providers/affiliate_open_api/apis/openapi/products/bestcategories/{val}?limit=100&subId=wordpress&imageSize=256x256"
     item_dict = 쿠팡검색기(best_url)
     time.sleep(7)
     df = pd.DataFrame(item_dict["data"])
