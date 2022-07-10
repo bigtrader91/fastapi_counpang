@@ -12,7 +12,7 @@ async def index(request):
             f"""SELECT DISTINCT "categoryName", "productName", \
                 "productPrice", "productImage", "productUrl"\
                      FROM category where "categoryName"='{i}' \
-                        and rank <= 4 ;"""
+                          ;"""
         )
 
         data = cursor.fetchall()

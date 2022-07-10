@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-<channel>
-  {% for item in search2 %}
-  <item>
-    <description>#{{ item['키워드'] }}  {{ item['태그'] }}</description>
-    <title>{{ item['상품명'] }}</title>
-    <image>{{ item['이미지'] }}</image>
-    <link>http://gumegume.shop/search/{{ item['ID'] }}</link>
+  <channel>
+  <title>gumegume상품추천</title>
+  <link>http://gumegume.shop/</link>
+  <description>최근 많은 사람들에게 사랑받는 상품들을 빠르게 전달해드립니다. </description>
+  <language>ko</language>
+  <pubDate>Wed, 06 Jul 2022 18:40:37 +0900</pubDate>
+  <generator>GUMEGUME</generator>
+  <ttl>100</ttl>
+    {% for item in search2 %}
+    <item>
+      <title>{{ item['상품명'] }}</title>
+      <link>http://gumegume.shop/search/{{ item['ID'] }}</link>
+      <guid>http://gumegume.shop/search/{{ item['ID'] }}</guid>
+      <pubDate>Wed, 06 Jul 2022 18:40:37 +0900</pubDate>
+      <description>#{{ item['키워드'] }}  {{ item['태그'] }}</description>
+      <image>{{ item['이미지'] }}</image>
+    </item>
+    {% endfor %}
 
-  </item>
-  {% endfor %}
-
-  {% for item2 in category2 %}
-  <item>
-    <description>#{{ item2['키워드'] }}  {{ item2['태그'] }}</description>
-    <title>{{ item2['상품명'] }}</title>
-    <image>{{ item2['이미지'] }}</image>
-    <link>http://gumegume.shop/item/{{ item2['ID'] }}</link>
-
-  </item>
-  {% endfor %}
-</channel>
+    {% for item2 in category2 %}
+    <item>
+      <title>{{ item2['상품명'] }}</title>
+      <link>http://gumegume.shop/item/{{ item2['ID'] }}</link>
+      <description>#{{ item2['키워드'] }}  {{ item2['태그'] }}</description>
+      <image>{{ item2['이미지'] }}</image>
+    </item>
+    {% endfor %}
+  </channel>
 </rss>

@@ -15,7 +15,7 @@
                 <!-- 핀터레스트 -->
         <meta name="p:domain_verify" content="ac77f45850bd1b90010b0ed312fa1b4d"/>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5516338840795705"
-        crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-YXTZG2FYFZ"></script>
         <script>
@@ -25,15 +25,13 @@
 
         gtag('config', 'G-YXTZG2FYFZ');
         </script>
-
         <title>GumeGume</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/assets/구메구메.ico') }}"/>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/assets/구메구메.ico') }}" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <!-- <link href="static/css/item_styles.css" rel="stylesheet" /> -->
-        <link href="{{ url_for('static', path='/css/item_styles.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -42,25 +40,38 @@
                 <a class="navbar-brand" href="/">GumeGume</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" href="/category/여성패션">여성의류</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/남성패션">남성의류</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/뷰티">뷰티</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/출산_유아동">육아</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/유아동패션">유아동패션</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/식품">식품</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/주방용품">주방</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/생활용품">생활</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/홈인테리어">인테리어</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/가전디지털">전자가전</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/스포츠_레저">스포츠</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/자동차용품">자동차</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/도서_음반_DVD">도서/음반</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/헬스_건강식품">건강</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/category/완구_취미">취미</a></li>
 
-                        <li class="nav-item"><a class="nav-link" href="/category/반려동물용품">반려동물</a></li>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="/category/여성패션">여성의류</a></li>
+                            <li><a class="dropdown-item" href="/category/남성패션">남성의류</a></li>
+                            <li><a class="dropdown-item" href="/category/뷰티">뷰티</a></li>
+                            <li><a class="dropdown-item" href="/category/출산_유아동">육아</a></li>
+                            <li><a class="dropdown-item" href="/category/유아동패션">유아동패션</a></li>
+                            <li><a class="dropdown-item" href="/category/식품">식품</a></li>
+                            <li><a class="dropdown-item" href="/category/주방용품">주방</a></li>
+                            <li><a class="dropdown-item" href="/category/생활용품">생활</a></li>
+                            <li><a class="dropdown-item" href="/category/홈인테리어">인테리어</a></li>
+                            <li><a class="dropdown-item" href="/category/가전디지털">전자가전</a></li>
+                            <li><a class="dropdown-item" href="/category/스포츠_레저">스포츠</a></li>
+                            <li><a class="dropdown-item" href="/category/자동차용품">자동차</a></li>
+                            <li><a class="dropdown-item" href="/category/도서_음반_DVD">도서/음반</a></li>
+                            <li><a class="dropdown-item" href="/category/헬스_건강식품">건강</a></li>
+                            <li><a class="dropdown-item" href="/category/완구_취미">취미</a></li>
+                            <li><a class="dropdown-item" href="/category/반려동물용품">반려동물</a></li>
+                            </ul>
+
+                        </li>
                     </ul>
+
                     <form class="d-flex">
                         <!-- <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
@@ -146,6 +157,9 @@
             <div class="container"><p class="m-0 text-center text-white">이 사이트는 쿠팡 파트너스 활동의 일환으로
                 일정액의 수수료를 제공받을 수 있습니다.</p></div>
         </footer>
-
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{{ url_for('static', path='/js/item_scripts.js') }}"></script>
     </body>
 </html>

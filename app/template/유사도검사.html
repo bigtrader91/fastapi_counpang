@@ -3,14 +3,14 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="각 상품별 카테고리 페이지입니다. 패션, 뷰티, 출산유아동, 식품, 주방용품, 생활용품, 레저, 자동차, 도서 음반, 반려동물용품 등이 있습니다." />
+        <meta name="description" content="검색상위종목 TOP10에 대한 네이버와 다음의 실시간 순위를 제공합니다." />
         <meta name="author" content="gumegume" />
-        <meta name="Keywords" content="{{related_keywords}}">
+        <meta name="Keywords" content="검색상위종목">
         <meta name="Robots" content="ALL">
 
         <meta property="og:type" content="website">
-        <meta property="og:title" content="GumeGume">
-        <meta property="og:description" content="흥미로운 상품들을 추천해주는 종합 쇼핑채널입니다^^">
+        <meta property="og:title" content="검색상위종목">
+        <meta property="og:description" content="네이버와 다음 실시간 검색상위종목 TOP10">
         <meta property="og:image" content="static/assets/구메구메.ico">
         <meta property="og:url" content="http://gumegume.shop">
         <!-- 핀터레스트 -->
@@ -32,7 +32,12 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet" />
+        <link href="static/css/styles.css" rel="stylesheet" />
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Navigation-->
@@ -72,14 +77,8 @@
 
                         </li>
                     </ul>
-
-
                     <form class="d-flex">
-                        <!-- <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button> -->
+
                     </form>
                 </div>
             </div>
@@ -99,59 +98,36 @@
         <section class="py-5">
 
             <div class="container px-4 px-lg-5 mt-5">
-                <h2><b>{{temp_cat[0]['카테고리']}}</b></h2>
+                <h1>검색상위종목 TOP10({{ now }})</h1>
+                <hr>
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">순위</th>
+                        <th scope="col">네이버</th>
+                        <th scope="col">다음</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for d in data %}
+                      <tr>
+                        <th scope="row">{{ d[0] }}</th>
+                        <td>{{ d[1] }}</td>
+                        <td>{{ d[2] }}</td>
+                      </tr>
 
-                <!-- <img src="static/assets/의류2.jpg" title="" alt="" data-edit="false" data-editor="field" class="rounded mgb-20" style="width: 100%; background: #555555" data-v-0b78704d=""> -->
-                <!-- <div><iframe src="https://ads-partners.coupang.com/widgets.html?id=592015&template=carousel&trackingCode=AF4048649&subId=&width=680&height=140" width="680" height="140" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe></div> -->
-                <hr style="border: solid 1.5px black;">
-                <p align="left"> 사진 혹은 버튼 클릭시 쿠팡 상세페이지로 연결되며, 구매시 3%의 수수료를 제공받습니다.(구매가격에는 영향을 주지 않습니다) </p>
-                <div class="text-center text-black">
-
-
-                    <br><br><br>
-                </div>
-
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    {% for cat in temp_cat %}
-
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <a href="{{cat['주소']}}" target="_blank" ><img class="card-img-top" src="{{ cat['이미지'] }}" alt="{{ cat['상품명'] }}" /></a>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h6 class="fw-bolder">{{ cat['상품명'] }}</h6>
-                                    <!-- Product price-->
-                                    {{ cat['가격']}}원
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ cat['주소'] }}">🔎 자세히 보기</a></div>
-                            </div>
-                        </div>
-                    </div>
                     {% endfor %}
-                </div>
+
+                    </tbody>
+                  </table>
+
 
             </div>
-            <br>
-            <br>
-            <br>
-            <hr style="border: solid 1.5px black;">
 
-
-
-
-
-            <!-- <iframe src="https://ads-partners.coupang.com/widgets.html?id=592017&template=carousel&trackingCode=AF4048649&subId=&width=900&height=100" width="500" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe> -->
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">이 사이트는 쿠팡 파트너스 활동의 일환으로
-                일정액의 수수료를 제공받을 수 있습니다.</p></div>
+            <div class="container"><p class="m-0 text-center text-white">© {{year}}. GumeGume.</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
