@@ -3,14 +3,14 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="검색상위종목 TOP10에 대한 네이버와 다음의 실시간 순위를 제공합니다." />
+        <meta name="description" content="문서자동요약 결과를 제공합니다." />
         <meta name="author" content="PySynTax" />
-        <meta name="Keywords" content="검색상위종목">
+        <meta name="Keywords" content="문서자동요약">
         <meta name="Robots" content="ALL">
 
         <meta property="og:type" content="website">
-        <meta property="og:title" content="검색상위종목">
-        <meta property="og:description" content="네이버와 다음 실시간 검색상위종목 TOP10">
+        <meta property="og:title" content="문서자동요약">
+        <meta property="og:description" content="문서자동요약 결과를 제공합니다.">
         <meta property="og:image" content="{{ url_for('static', path='/assets/파이신택스.ico') }}">
         <meta property="og:url" content="https://pysyntax.com">
         <!-- 핀터레스트 -->
@@ -68,7 +68,7 @@
 
                 <div class="text-center text-white">
 
-                    <h1 class="display-4 fw-bolder" >🔎검색상위종목 TOP10</h1>
+                    <h1 class="display-4 fw-bolder" >✂문서자동요약</h1>
 
                 </div>
             </div>
@@ -77,32 +77,75 @@
         <section class="py-5">
 
             <div class="container px-4 px-lg-5 mt-5">
-                <h3>({{ now }})</h3>
-                <hr>
 
-                <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">순위</th>
-                        <th scope="col">네이버</th>
-                        <th scope="col">다음</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {% for d in data %}
-                      <tr>
-                        <th scope="row">{{ d[0] }}</th>
-                        <td>{{ d[1] }}</td>
-                        <td>{{ d[2] }}</td>
-                      </tr>
 
-                    {% endfor %}
 
-                    </tbody>
-                  </table>
+                <form  method="POST" >
+                    <div>
+                    <center><h2 color:red;>😀'입력'부분에만 요약하고자 하는 내용을 넣어주세요.</h2></center>
+                    </div>
+                    <!-- Message input -->
+
+
+
+
+                    <div class="form-outline mb-4">
+                        <h5>입력</h5>
+                        <hr>
+                      <textarea class="form-control" id="form4Example3"  name="입력" rows="5" placeholder="글자를 입력하거나, 복사 후 붙여 넣어주세요.">{{입력}}</textarea>
+                      <label class="form-label" for="form4Example3" ></label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <h5>출력</h5>
+                        <hr>
+                        <textarea class="form-control" id="form4Example3"  name="출력" rows="5" placeholder="요약결과">{{출력}}</textarea>
+                        <label class="form-label" for="form4Example3" ></label>
+                      </div>
+                    <!-- Submit button -->
+
+
+                    <div class="input-group mb-3">
+                        <div class="container">
+                            <div class="row">
+                              <div class="col">
+                                <h6>비율값 요약 : 0~1 사이의 값 </h6>
+                                <h6>단어수 요약 : 1초과 값</h6>
+                              </div>
+                              <div class="col">
+
+                              </div>
+                              <div class="col">
+                                <input class="form-control" type="text" placeholder="입력" name="입력값" aria-label="default input example">
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div><button type="submit" class="btn btn-primary btn-block mb-4">문서자동요약하기</button></div>
+
+
+                  </form>
+
+
+                    <hr>
+                    <h2>문서자동요약이란?</h2>
+                    <br>
+                    <p>문서자동요약은 딥러닝 오픈소스를 바탕으로 글의 내용중에서 중요하게 판단되는 부분을</p>
+                    <p>자동으로 찾아서 줄여주는 기능입니다. 즉 쓸모없는 내용들을 제거되고 핵심적인 내용만</p>
+                    <p>요약되어 보여지게 됩니다.(물론 핵심의 기준은 각자가 다를수 있습니다^^)</p>
+                    <hr>
+                    <br>
+                    <h2>입력방법</h2>
+                    <br>
+                    <p>작은 입력칸에 0~1 사이의 값을 입력하고 버튼을 클릭하시면, 비율단위로 요약이 되고</p>
+                    <p>2이상의 값을 입력하시면 입력된 값의 단어수만큼으로 요약이 됩니다.</p>
+                    <p>예를 들면 2천자의 글에 0.2값을 입력하시면 400자의 글로 요약이 되고</p>
+                    <p>2천자의 글에 100을 입력하면 단어 100개의 글로 요약이 됩니다.</p>
+
+
 
 
             </div>
+
 
         </section>
         <!-- Footer-->

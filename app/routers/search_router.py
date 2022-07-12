@@ -2,15 +2,14 @@ from starlette.requests import Request
 from starlette.responses import Response
 from app.database.database import conn
 from app.utils import templates
+from config import settings
 
 
 async def search(request: Request) -> Response:
     productId = request.path_params["productId"]
 
     cursor = conn.cursor()
-    cursor.execute(
-        f"""SELECT DISTINCT * FROM search where "productId"='{productId}';"""
-    )
+    cursor.execute(f"""{settings.sql_search_item_main}'{productId}';""")
     data = cursor.fetchall()
     data = data[0]
     productId = data[1]
@@ -34,9 +33,7 @@ async def search(request: Request) -> Response:
         isFreeShipping = "❌"
 
     cursor.execute(
-        f"""SELECT DISTINCT "keyword", "productName", "productPrice", \
-            "productImage", "productUrl" FROM search \
-                where "keyword"='{keyword}' \
+        f"""{settings.sql_search_item_sub}'{keyword}' \
                     and "productName" != '{productName}';"""
     )
     Related_data = cursor.fetchall()

@@ -3,16 +3,16 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="검색상위종목 TOP10에 대한 네이버와 다음의 실시간 순위를 제공합니다." />
-        <meta name="author" content="gumegume" />
-        <meta name="Keywords" content="검색상위종목">
+        <meta name="description" content="글자수세기를 통해서 적정분량의 글쓰기를 지원합니다." />
+        <meta name="author" content="PySynTax" />
+        <meta name="Keywords" content="글자수세기">
         <meta name="Robots" content="ALL">
 
         <meta property="og:type" content="website">
-        <meta property="og:title" content="검색상위종목">
-        <meta property="og:description" content="네이버와 다음 실시간 검색상위종목 TOP10">
-        <meta property="og:image" content="static/assets/구메구메.ico">
-        <meta property="og:url" content="http://gumegume.shop">
+        <meta property="og:title" content="글자수세기">
+        <meta property="og:description" content="글자수세기를 통해서 적정분량의 글쓰기를 지원합니다.">
+        <meta property="og:image" content="{{ url_for('static', path='/assets/파이신택스.ico') }}">
+        <meta property="og:url" content="https://pysyntax.com">
         <!-- 핀터레스트 -->
         <meta name="p:domain_verify" content="ac77f45850bd1b90010b0ed312fa1b4d"/>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5516338840795705"
@@ -26,9 +26,9 @@
 
         gtag('config', 'G-YXTZG2FYFZ');
         </script>
-        <title>GumeGume</title>
+        <title>PySynTax</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/assets/구메구메.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/assets/파이신택스.ico') }}" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -43,39 +43,18 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/">GumeGume</a>
+                <a class="navbar-brand" href="/">Home</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/검색상위종목">검색상위종목</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/글자수세기">글자수세기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/유사도검사">유사도검사</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/문서자동요약">문서자동요약</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/황금키워드">황금키워드</a></li>
 
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="/category/여성패션">여성의류</a></li>
-                            <li><a class="dropdown-item" href="/category/남성패션">남성의류</a></li>
-                            <li><a class="dropdown-item" href="/category/뷰티">뷰티</a></li>
-                            <li><a class="dropdown-item" href="/category/출산_유아동">육아</a></li>
-                            <li><a class="dropdown-item" href="/category/유아동패션">유아동패션</a></li>
-                            <li><a class="dropdown-item" href="/category/식품">식품</a></li>
-                            <li><a class="dropdown-item" href="/category/주방용품">주방</a></li>
-                            <li><a class="dropdown-item" href="/category/생활용품">생활</a></li>
-                            <li><a class="dropdown-item" href="/category/홈인테리어">인테리어</a></li>
-                            <li><a class="dropdown-item" href="/category/가전디지털">전자가전</a></li>
-                            <li><a class="dropdown-item" href="/category/스포츠_레저">스포츠</a></li>
-                            <li><a class="dropdown-item" href="/category/자동차용품">자동차</a></li>
-                            <li><a class="dropdown-item" href="/category/도서_음반_DVD">도서/음반</a></li>
-                            <li><a class="dropdown-item" href="/category/헬스_건강식품">건강</a></li>
-                            <li><a class="dropdown-item" href="/category/완구_취미">취미</a></li>
-                            <li><a class="dropdown-item" href="/category/반려동물용품">반려동물</a></li>
-                            </ul>
-
-                        </li>
                     </ul>
                     <form class="d-flex">
 
@@ -89,8 +68,8 @@
 
                 <div class="text-center text-white">
 
-                    <h1 class="display-4 fw-bolder" >GumeGume</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Secretly from time to time</p>
+                    <h1 class="display-4 fw-bolder" >📝글자수세기</h1>
+
                 </div>
             </div>
         </header>
@@ -98,14 +77,14 @@
         <section class="py-5">
 
             <div class="container px-4 px-lg-5 mt-5">
-                <h1>글자수세기</h1>
-                <hr>
+
+
 
                 <form  method="POST" >
 
                     <!-- Message input -->
                     <div class="form-outline mb-4">
-                      <textarea class="form-control" id="form4Example3"  name="text" rows="4" placeholder="글자를 입력하거나, 복사 후 붙여 넣어주세요."></textarea>
+                      <textarea class="form-control" id="form4Example3"  name="text" rows="10" placeholder="글자를 입력하거나, 복사 후 붙여 넣어주세요.">{{text}}</textarea>
                       <label class="form-label" for="form4Example3" ></label>
                     </div>
 
@@ -113,49 +92,48 @@
                     <button type="submit" class="btn btn-primary btn-block mb-4">글자수 확인</button>
                   </form>
 
-                  <h3>공백포함 : {{공백포함}}</h3>
+                  <h3>공백  포함 : {{공백포함}}</h3>
                   <h3>공백불포함 : {{공백불포함}}</h3>
-                  <br>
-                  <br>
-                  <br>
 
 
                   <hr>
-                  <h2 data-ke-size="size26"><b>글자수 세기란?</b></h2>
-                  <p data-ke-size="size16"><b>안녕하세요. 글자수세기에 대해 소개해드리겠습니다.</b></p>
-                  <p data-ke-size="size16">글자수 세기는 자기소개서와 같이 글자수가 어느 정도 정해진 문서를 작성할 때</p>
-                  <p data-ke-size="size16">꼭 필요한 과정입니다! 기업에서 정해놓은 글자수에 맞추어 적정분량의 글을 작성했을 때</p>
-                  <p data-ke-size="size16">자기소개서를 읽는 사람들에게 조금 더 좋은 인상을 심어줄 수 있겠죠??&nbsp;</p>
-                  <p data-ke-size="size16">너무 모자라지도 않고, 너무 과하지도 않은 적정한 분량의 글은 내용을 제외하더라도</p>
-                  <p data-ke-size="size16">매우 중요하다고 생각합니다.</p>
-                  <h3 data-ke-size="size23">글자수 늘리기</h3>
-                  <p data-ke-size="size16">이미 작성한 글의 분량이 너무 적은데, 마땅히 적을 이야기가 없을 때&nbsp;</p>
-                  <p data-ke-size="size16">글자 수를 늘리는 꿀팁을 공유드릴게요.&nbsp;</p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <h4 data-ke-size="size20">1. 소제목 달기</h4>
-                  <p data-ke-size="size16">소제목을 달아주세요!<span style="letter-spacing: 0px;">소제목을 달아주면서 앞으로 내가 어떤 이야기를</span></p>
-                  <p data-ke-size="size16">할지 요약해서 보여주세요.</p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <h4 data-ke-size="size20">2. 구체적인 사례 추가</h4>
-                  <p data-ke-size="size16">구체적인 수치나 구체적인 사례를 꼭 함께 넣어주세요. 읽은이로 하여금</p>
-                  <p data-ke-size="size16">내 이야기에 신빙성을 높여줄 수 있습니다.( 예를 들면 공모전에 참가하여</p>
-                  <p data-ke-size="size16">좋은경험을 하였습니다. 보다는 공모전에 참가하여 팀원들과 함께 협력하면서</p>
-                  <p data-ke-size="size16">협업의 중요성을 알게돼서 좋은경험을 하였습니다.)</p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <p data-ke-size="size16"><b>지금까지 글자수세기에 대해 간략하게 소개해드렸습니다.</b></p>
-                  <p data-ke-size="size16"><b>글자수세기를 통해서 모두들 적절한 분량의 자기소개서를 작성하는데</b></p>
-                  <p data-ke-size="size16"><b>도움이 되셨으면 좋겠습니다.</b></p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <p data-ke-size="size16">&nbsp;</p>
-                  <p data-ke-size="size16">&nbsp;</p>
+                  <div>
+                    <div><h2 ><b>글자수 세기란?</b></h2></div>
+
+
+                  <p ><b>안녕하세요. 글자수세기에 대해 소개해드리겠습니다.</b></p>
+                  <p >글자수 세기는 자기소개서 혹은 글자수가 어느 정도 정해진 문서를 작성할 때</p>
+                  <p >꼭 필요한 과정입니다! 기업에서 정해놓은 글자수에 맞추어 적정분량의 글을 작성했을 때</p>
+                  <p >자기소개서를 읽는 사람들에게 조금 더 좋은 인상을 심어줄 수 있겠죠??</p>
+                  <p >너무 모자라지도 않고, 너무 과하지도 않은 적정한 분량의 글은 내용을 제외하더라도</p>
+                  <p >매우 중요하다고 생각합니다.</p>
+                  </div>
+
+                  <h3>글자수 늘리기</h3>
+                  <p >이미 작성한 글의 분량이 너무 적은데, 마땅히 적을 이야기가 없을 때</p>
+                  <p >글자 수를 늘리는 꿀팁을 공유드릴게요.</p>
+                  <p ></p>
+                  <h4>1. 소제목 달기</h4>
+                  <p>소제목을 달아주세요!<span style="letter-spacing: 0px;">소제목을 달아주면서 앞으로 내가 어떤 이야기를</span></p>
+                  <p>할지 요약해서 보여주세요.</p>
+                  <p></p>
+                  <h>2. 구체적인 사례 추가</h4>
+                  <p>구체적인 수치나 구체적인 사례를 꼭 함께 넣어주세요. </p>
+                  <p>내 이야기에 신빙성을 높여줄 수 있습니다.( 예를 들면 공모전에 참가하여</p>
+                  <p>좋은경험을 하였습니다. 보다는 공모전에 참가하여 팀원들과 함께 협력하면서</p>
+                  <p>협업의 중요성을 알게돼서 좋은경험을 하였습니다.)</p>
+                  <p></p>
+                  <p><b>지금까지 글자수세기에 대해 간략하게 소개해드렸습니다.</b></p>
+                  <p><b>글자수세기를 통해서 모두들 적절한 분량의 자기소개서를 작성하는데</b></p>
+                  <p><b>도움이 되셨으면 좋겠습니다.</b></p>
+
+
             </div>
 
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">© {{year}}. GumeGume.</p></div>
+            <div class="container"><p class="m-0 text-center text-white">© 2022. PySynTax.</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

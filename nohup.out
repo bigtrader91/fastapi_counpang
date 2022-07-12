@@ -4052,3 +4052,685 @@ INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%
 INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
 INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
 INFO:     180.233.200.112:0 - "POST /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [1833] using StatReload
+INFO:     Started server process [1835]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50028 - "GET / HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:50028 - "GET /favicon.ico HTTP/1.1" 400 Bad Request
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3796] using StatReload
+INFO:     Started server process [3798]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     180.233.200.112:0 - "GET /category/%EC%97%AC%EC%84%B1%ED%8C%A8%EC%85%98 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%B6%9C%EC%82%B0_%EC%9C%A0%EC%95%84%EB%8F%99 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EB%B7%B0%ED%8B%B0 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%B6%9C%EC%82%B0_%EC%9C%A0%EC%95%84%EB%8F%99 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%9C%A0%EC%95%84%EB%8F%99%ED%8C%A8%EC%85%98 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /js/scripts.js HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /css/styles.css HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /category/%ED%97%AC%EC%8A%A4_%EA%B1%B4%EA%B0%95%EC%8B%9D%ED%92%88 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%9E%90%EB%8F%99%EC%B0%A8%EC%9A%A9%ED%92%88 HTTP/1.0" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [3798]
+INFO:     Stopping reloader process [3796]
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [1869] using StatReload
+INFO:     Started server process [1871]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1871]
+INFO:     Started server process [1948]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     185.7.214.104:0 - "GET /console/ HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EB%B7%B0%ED%8B%B0 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EA%B0%80%EC%A0%84%EB%94%94%EC%A7%80%ED%84%B8 HTTP/1.0" 200 OK
+INFO:     185.7.214.104:0 - "POST /Autodiscover/Autodiscover.xml HTTP/1.0" 400 Bad Request
+INFO:     35.195.93.98:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     185.7.214.104:0 - "GET /_ignition/execute-solution HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     160.2.254.172:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1948]
+INFO:     Stopping reloader process [1869]
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [2122] using StatReload
+INFO:     Started server process [2127]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     185.196.220.70:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET /category/%EB%B7%B0%ED%8B%B0 HTTP/1.0" 200 OK
+INFO:     103.40.196.159:0 - "POST /GponForm/diag_Form?images/ HTTP/1.0" 400 Bad Request
+INFO:     188.166.87.67:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     162.221.192.26:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /css/styles.css HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /js/scripts.js HTTP/1.0" 304 Not Modified
+INFO:     74.201.28.29:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%97%AC%EC%84%B1%ED%8C%A8%EC%85%98 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%8B%9D%ED%92%88 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%B6%9C%EC%82%B0_%EC%9C%A0%EC%95%84%EB%8F%99 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     185.196.220.70:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     37.0.8.116:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     83.150.237.14:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     104.217.249.182:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     45.61.186.139:0 - "GET /config/getuser?index=0 HTTP/1.0" 400 Bad Request
+INFO:     176.226.219.9:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     51.79.29.48:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     51.79.29.48:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     185.196.220.70:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     128.14.134.134:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     104.217.249.182:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     51.79.29.48:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     51.79.29.48:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     37.0.8.116:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     104.217.249.182:0 - "POST /boaform/admin/formLogin HTTP/1.0" 400 Bad Request
+INFO:     185.7.214.104:0 - "POST /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 400 Bad Request
+INFO:     185.7.214.104:0 - "GET /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /css/styles.css HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /js/scripts.js HTTP/1.0" 304 Not Modified
+INFO:     180.233.200.112:0 - "GET /category/%EB%82%A8%EC%84%B1%ED%8C%A8%EC%85%98 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EB%B7%B0%ED%8B%B0 HTTP/1.0" 200 OK
+WARNING:  StatReload detected changes in 'app/routers/유사도검사_router copy.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2127]
+INFO:     Started server process [9485]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/main2.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9485]
+INFO:     Started server process [9653]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     51.79.29.48:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     51.79.29.48:0 - "GET /.env HTTP/1.0" 400 Bad Request
+WARNING:  StatReload detected changes in 'app/routers/문서요약_router.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9653]
+INFO:     Started server process [10407]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     185.7.214.104:0 - "GET /solr/admin/info/system?wt=json HTTP/1.0" 400 Bad Request
+INFO:     185.7.214.104:0 - "GET /index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=HelloThinkPHP21 HTTP/1.0" 400 Bad Request
+INFO:     23.251.102.74:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     45.61.186.139:0 - "GET /config/getuser?index=0 HTTP/1.0" 400 Bad Request
+INFO:     104.248.151.218:0 - "GET / HTTP/1.0" 200 OK
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /server-status HTTP/1.0" 500 Internal Server Error
+INFO:     104.248.151.218:0 - "GET / HTTP/1.0" 200 OK
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /info.php HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /.env HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /telescope/requests HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /.DS_Store HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /s/33342e36342e3132362e3339/_/%3B/META-INF/maven/com.atlassian.jira/jira-webapp-dist/pom.properties HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /.git/config HTTP/1.0" 500 Internal Server Error
+INFO:     104.248.151.218:0 - "GET /?rest_route=/wp/v2/users/ HTTP/1.0" 200 OK
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /login.action HTTP/1.0" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    await self.app(scope, receive, sender)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 699, in __call__
+    await self.default(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/routing.py", line 593, in not_found
+    raise HTTPException(status_code=404)
+starlette.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/cors.py", line 84, in __call__
+    await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 24, in __call__
+    await responder(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/gzip.py", line 43, in __call__
+    await self.app(scope, receive, self.send_with_gzip)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/exceptions.py", line 101, in __call__
+    response = await handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 11, in not_found
+    return HTMLResponse(content=HTML_404_PAGE, status_code=exc.status_code)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 49, in __init__
+    self.body = self.render(content)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/responses.py", line 57, in render
+    return content.encode(self.charset)
+AttributeError: 'ellipsis' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 78, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/applications.py", line 124, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/gumeisbuy/.local/lib/python3.8/site-packages/starlette/middleware/errors.py", line 174, in __call__
+    response = await self.handler(request, exc)
+  File "/home/gumeisbuy/web/./app/exceptions/handlers.py", line 21, in excepion_error
+    return JSONResponse({"detail": exc.detail}, status_code=exc.status_code)
+AttributeError: 'AttributeError' object has no attribute 'detail'
+INFO:     104.248.151.218:0 - "GET /config.json HTTP/1.0" 500 Internal Server Error
+INFO:     167.94.138.44:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     167.94.138.44:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     65.154.226.167:0 - "GET / HTTP/1.0" 200 OK
+INFO:     65.154.226.167:0 - "GET /css/styles.css HTTP/1.0" 200 OK
+INFO:     65.154.226.167:0 - "GET /js/scripts.js HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /category/%EC%97%AC%EC%84%B1%ED%8C%A8%EC%85%98 HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /css/styles.css HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /js/scripts.js HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /assets/%EA%B5%AC%EB%A9%94%EA%B5%AC%EB%A9%94.ico HTTP/1.0" 200 OK
+INFO:     185.7.214.104:0 - "GET /?a=fetch&content=<php>die(@md5(HelloThinkCMF))</php> HTTP/1.0" 400 Bad Request
+INFO:     152.231.128.148:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     180.233.200.112:0 - "GET /category/%EC%97%AC%EC%84%B1%ED%8C%A8%EC%85%98 HTTP/1.0" 200 OK
+INFO:     185.196.220.70:0 - "GET / HTTP/1.0" 400 Bad Request
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [10407]
+INFO:     Started server process [12999]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+0.7670714855194092 1
+INFO:     51.79.29.48:0 - "POST / HTTP/1.0" 400 Bad Request
+INFO:     51.79.29.48:0 - "GET /.env HTTP/1.0" 400 Bad Request
+INFO:     185.7.214.104:0 - "GET /?XDEBUG_SESSION_START=phpstorm HTTP/1.0" 400 Bad Request
+INFO:     122.99.248.165:0 - "GET / HTTP/1.0" 200 OK
+INFO:     192.241.212.228:0 - "GET / HTTP/1.0" 400 Bad Request
+INFO:     69.25.58.56:0 - "GET / HTTP/1.0" 200 OK
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [83773] using StatReload
+INFO:     Started server process [83775]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/home/gumeisbuy/web']
+INFO:     Uvicorn running on http://127.0.0.1:8800 (Press CTRL+C to quit)
+INFO:     Started reloader process [83834] using StatReload
+INFO:     Started server process [83836]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+0.4638664722442627 1
+0.0008642673492431641 1
+2022-07-12 10:33:15,693 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2022-07-12 10:33:15,694 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-12 10:33:15,695 INFO sqlalchemy.engine.Engine select current_schema()
+2022-07-12 10:33:15,695 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-12 10:33:15,697 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2022-07-12 10:33:15,697 INFO sqlalchemy.engine.Engine [raw sql] {}
+2022-07-12 10:33:15,698 INFO sqlalchemy.engine.Engine SELECT DISTINCT ON("연관키워드") "연관키워드", "월간검색수_PC",             "월간검색수_모바일", "경쟁정도", "문서수", "키워드포화도"                  FROM keyword  where "키워드포화도" <10 and "월간검색수_PC" >100 and                     "월간검색수_모바일">100  and "경쟁정도" ='낮음' ;
+2022-07-12 10:33:15,699 INFO sqlalchemy.engine.Engine [raw sql] {}
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+0.48512721061706543 1
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     211.249.242.20:0 - "GET /assets/%ED%8C%8C%EC%9D%B4%EC%8B%A0%ED%83%9D%EC%8A%A4.ico HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+2022-07-12 10:33:57,436 INFO sqlalchemy.engine.Engine SELECT DISTINCT ON("연관키워드") "연관키워드", "월간검색수_PC",             "월간검색수_모바일", "경쟁정도", "문서수", "키워드포화도"                  FROM keyword  where "키워드포화도" <10 and "월간검색수_PC" >100 and                     "월간검색수_모바일">100  and "경쟁정도" ='낮음' ;
+2022-07-12 10:33:57,436 INFO sqlalchemy.engine.Engine [raw sql] {}
+INFO:     180.233.200.112:0 - "GET / HTTP/1.0" 200 OK
+INFO:     180.233.200.112:0 - "GET /%EA%B2%80%EC%83%89%EC%83%81%EC%9C%84%EC%A2%85%EB%AA%A9 HTTP/1.0" 200 OK
+object of type 'NoneType' has no len()
+INFO:     180.233.200.112:0 - "GET /%EA%B8%80%EC%9E%90%EC%88%98%EC%84%B8%EA%B8%B0 HTTP/1.0" 200 OK
+3.337860107421875e-05 2
+INFO:     180.233.200.112:0 - "GET /%EC%9C%A0%EC%82%AC%EB%8F%84%EA%B2%80%EC%82%AC HTTP/1.0" 200 OK
+float() argument must be a string or a number, not 'NoneType'
+local variable '출력' referenced before assignment
+INFO:     180.233.200.112:0 - "GET /%EB%AC%B8%EC%84%9C%EC%9E%90%EB%8F%99%EC%9A%94%EC%95%BD HTTP/1.0" 200 OK
+INFO:     121.53.204.90:0 - "GET /assets/%ED%8C%8C%EC%9D%B4%EC%8B%A0%ED%83%9D%EC%8A%A4.ico HTTP/1.0" 200 OK

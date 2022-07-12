@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+      <loc>http://pysyntax.com</loc>
+      <lastmod>2022-07-09T03:34:19+00:00</lastmod>
+      <priority>1.00</priority>
+    </url>
+    <url>
+      <loc>http://pysyntax.com/검색상위종목</loc>
+      <lastmod>2022-07-10T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://pysyntax.com/글자수세기</loc>
+      <lastmod>2022-07-10T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://pysyntax.com/문서자동요약</loc>
+      <lastmod>2022-07-10T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://pysyntax.com/유사도검사</loc>
+      <lastmod>2022-07-10T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>http://pysyntax.com/키워드</loc>
+      <lastmod>2022-07-10T03:34:19+00:00</lastmod>
+      <priority>0.80</priority>
+    </url>
+</urlset>

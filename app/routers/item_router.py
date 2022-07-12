@@ -3,16 +3,14 @@ from starlette.requests import Request
 from starlette.responses import Response
 from app.database.database import conn
 from app.utils import templates
+from config import settings
 
 
 async def item(request: Request) -> Response:
     productId = request.path_params["productId"]
 
     cursor = conn.cursor()
-    cursor.execute(
-        f"""SELECT DISTINCT * FROM category \
-            where "productId"='{productId}';"""
-    )
+    cursor.execute(f"""{settings.sql_item_main}'{productId}';""")
     data = cursor.fetchall()
     data = data[0]
     productId = data[1]
@@ -36,12 +34,7 @@ async def item(request: Request) -> Response:
     else:
         isFreeShipping = "❌"
 
-    cursor.execute(
-        f"""SELECT DISTINCT "categoryName", "productName", "productPrice", \
-            "productImage", "productUrl" \
-                FROM category \
-                where "categoryName"='{categoryName}' limit 20;"""
-    )
+    cursor.execute(f"""{settings.sql_item_sub}'{categoryName}' limit 20;""")
     Related_data = cursor.fetchall()
     cnts = random.sample([i for i in range(0, len(data))], 8)
     temp = []
