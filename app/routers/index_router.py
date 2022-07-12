@@ -1,6 +1,7 @@
 from app.service.service import items
 from app.database.database import conn
 from app.utils import templates
+from config import settings
 
 
 async def index(request):
@@ -9,10 +10,8 @@ async def index(request):
 
         cursor = conn.cursor()
         cursor.execute(
-            f"""SELECT DISTINCT "categoryName", "productName", \
-                "productPrice", "productImage", "productUrl"\
-                     FROM category where "categoryName"='{i}' \
-                          ;"""
+            f"""{settings.sql_index}'{i}' \
+                          and "rank" <10 ;"""
         )
 
         data = cursor.fetchall()

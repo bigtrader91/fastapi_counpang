@@ -16,15 +16,11 @@ async def 글자수세기(request: Request) -> Response:
         return templates.TemplateResponse(
             name="글자수세기.html",
             # media_type='application/x-www-form-urlencoded',
-            context={
-                "request": request,
-                "공백포함": 공백포함,
-                "공백불포함": 공백불포함,
-            },
+            context={"request": request, "공백포함": 공백포함, "공백불포함": 공백불포함, "text": text},
         )
 
     except Exception as ex:
-        print(ex, "-taaaaaaaaaaaaaaa")
+        print(ex)
         return templates.TemplateResponse(
             name="글자수세기.html",
             # media_type='text/plain',

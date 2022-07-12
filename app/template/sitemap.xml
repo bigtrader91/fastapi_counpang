@@ -6,11 +6,6 @@
       <priority>1.00</priority>
     </url>
     <url>
-      <loc>http://gumegume.shop/검색상위종목</loc>
-      <lastmod>2022-07-05T03:34:19+00:00</lastmod>
-      <priority>0.80</priority>
-    </url>
-    <url>
       <loc>http://gumegume.shop/%EC%97%AC%EC%84%B1%ED%8C%A8%EC%85%98</loc>
       <lastmod>2022-07-05T03:34:19+00:00</lastmod>
       <priority>0.80</priority>
@@ -109,7 +104,7 @@
 
     {% for item in category %}
     <url>
-      <loc>https://gumegume.shop/item/{{ item[0] }}</loc>
+      <loc>http://gumegume.shop/item/{{ item[0] }}</loc>
       <changefreq>weekly</changefreq>
       <priority>0.85</priority>
     </url>
@@ -117,7 +112,7 @@
 
     {% for item2 in search %}
     <url>
-      <loc>https://gumegume.shop/search/{{ item2[0] }}</loc>
+      <loc>http://gumegume.shop/search/{{ item2[0] }}</loc>
       <changefreq>weekly</changefreq>
       <priority>0.85</priority>
     </url>

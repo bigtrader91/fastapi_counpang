@@ -3,18 +3,21 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="검색상위종목 TOP10에 대한 네이버와 다음의 실시간 순위를 제공합니다." />
+        <meta name="description" content="N포털 기준 포화도 10% 미만의 키워드들을 제공합니다." />
         <meta name="author" content="PySynTax" />
-        <meta name="Keywords" content="검색상위종목">
+        <meta name="Keywords" content="황금키워드">
         <meta name="Robots" content="ALL">
 
         <meta property="og:type" content="website">
-        <meta property="og:title" content="검색상위종목">
-        <meta property="og:description" content="네이버와 다음 실시간 검색상위종목 TOP10">
+        <meta property="og:title" content="황금키워드 무료제공">
+        <meta property="og:description" content="N포털 기준 포화도 10% 미만의 키워드들을 제공합니다.">
         <meta property="og:image" content="{{ url_for('static', path='/assets/파이신택스.ico') }}">
         <meta property="og:url" content="https://pysyntax.com">
+        <!-- 네이버 -->
+        <meta name="naver-site-verification" content="64a1023111f13126b28af3e611560bc44fac9bff" />
         <!-- 핀터레스트 -->
         <meta name="p:domain_verify" content="ac77f45850bd1b90010b0ed312fa1b4d"/>
+
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5516338840795705"
          crossorigin="anonymous"></script>
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -68,24 +71,46 @@
 
                 <div class="text-center text-white">
 
-                    <h1 class="display-4 fw-bolder" >🔎검색상위종목 TOP10</h1>
+                    <h1 class="display-4 fw-bolder" >💰황금키워드 List</h1>
 
                 </div>
             </div>
+
         </header>
         <!-- Section-->
+        <div class="container px-4 px-lg-5 my-5">
+
+              <hr>
+              <h4>😀안 내 사 항</h4>
+              <br>
+              <p>✔문 서 수 : 최근 한 달 동안 발행된 문서의 수</p>
+              <p>✔포 화 도 : (문서수/TOTAL조회수) X 100 </p>
+              <p>✔수집주기 : 매일 새벽1시~ 8시 사이</p>
+              <p>✔필    터 : PC & 모바일 조회수 >100, 경쟁강도="낮음", 포화도 < 10% </p>
+              <p>✔키워드는 매일 갱신되기에 특정 키워드에 사용자가 몰리더라도 포화도가 10%넘어갈 경우 자동으로 노출배제됩니다.</p>
+              <p>✔이 사이트는 유저분들의 피드백으로 발전해나갑니다. 아래 테이블에 추가됐으면 하는 기능이 있으면 연락주세요.</p>
+
+
+              <hr>
+
+              </div>
         <section class="py-5">
 
             <div class="container px-4 px-lg-5 mt-5">
-                <h3>({{ now }})</h3>
+                <h3>({{ now }}) | 키워드 수 : {{count}}개</h3>
                 <hr>
 
                 <table class="table">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col">순위</th>
-                        <th scope="col">네이버</th>
-                        <th scope="col">다음</th>
+                        <th scope="col">키워드</th>
+                        <th scope="col">월간검색_PC</th>
+                        <th scope="col">월간검색_모바일</th>
+                        <th scope="col">TOTAL검색</th>
+                        <th scope="col">경쟁정도</th>
+                        <th scope="col">문서수</th>
+                        <th scope="col">키워드포화도</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -94,6 +119,12 @@
                         <th scope="row">{{ d[0] }}</th>
                         <td>{{ d[1] }}</td>
                         <td>{{ d[2] }}</td>
+                        <td>{{ d[3] }}</td>
+                        <td>{{ d[4] }}</td>
+                        <td>{{ d[5] }}</td>
+                        <td>{{ d[6] }}%</td>
+
+
                       </tr>
 
                     {% endfor %}

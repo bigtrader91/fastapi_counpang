@@ -6,11 +6,17 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.gzip import GZipMiddleware
 
 
-
 middleware = [
-    Middleware(TrustedHostMiddleware, allowed_hosts=['gumegume.shop', '*.gumegume.shop']),
+    Middleware(
+        TrustedHostMiddleware,
+        allowed_hosts=[
+            "gumegume.shop",
+            "*.gumegume.shop",
+            "pysyntax.com",
+            "*.pysyntax.com",
+        ],
+    ),
     # Middleware(HTTPSRedirectMiddleware),
-    Middleware(CORSMiddleware, allow_origins=['*']),
-    Middleware(GZipMiddleware, minimum_size=500)
+    Middleware(CORSMiddleware, allow_origins=["*"]),
+    Middleware(GZipMiddleware, minimum_size=500),
 ]
-

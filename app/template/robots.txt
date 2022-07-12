@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://gumegume.shop/sitemap.xml
+Sitemap: https://www.gumegume.shop/sitemap.xml

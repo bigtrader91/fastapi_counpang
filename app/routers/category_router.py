@@ -2,6 +2,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from app.database.database import conn
 from app.utils import templates
+from config import settings
 
 
 async def category(request: Request, page: int = 1) -> Response:
@@ -11,9 +12,7 @@ async def category(request: Request, page: int = 1) -> Response:
 
     cursor = conn.cursor()
     cursor.execute(
-        f"""SELECT DISTINCT "categoryName", "productName",\
-             "productPrice", "productImage", "productUrl" \
-                FROM category where "categoryName"='{cat}' \
+        f"""{settings.sql_category}'{cat}' \
                     limit 28 offset 0;"""
     )
     data = cursor.fetchall()

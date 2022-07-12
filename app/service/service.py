@@ -1,13 +1,9 @@
-import requests
 import json
 import hmac
 import hashlib
-import requests
 from time import gmtime, strftime
-import requests
 from bs4 import BeautifulSoup
-
-import urllib.request
+import requests
 
 
 def generateHmac(method, url, secretKey, accessKey):
